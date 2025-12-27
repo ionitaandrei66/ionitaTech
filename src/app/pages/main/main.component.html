@@ -1,0 +1,168 @@
+<header class="main-header" [class.main-header--scrolled]="isScrolled">
+  <h1>
+    Ionita Tech.
+  </h1>
+  <div class="main-header-sections">
+    <h3>
+      firstSection
+    </h3>
+    <h3>
+      firstSection
+    </h3>
+    <h3>
+      firstSection
+    </h3>
+  </div>
+</header>
+
+<section class="first-section">
+<img class="background-first-section" [ngSrc]="'/background.png'" alt="" fill/>
+</section>
+
+<section class="second-section">
+  <div class="second-section-description">
+    <h3>
+      About Us
+    </h3>
+    <p>
+      At Ionita Tech, we are committed to pushing the boundaries of technology to create innovative solutions that empower businesses and individuals alike.
+    </p>
+  </div>
+
+  <div class="second-section-card">
+    <div class="card-image-wrapper">
+      <img class="card-image" [ngSrc]="'/together.jpeg'" alt="" fill/>
+    </div>
+    <div>
+      <h4>
+        Our Mission
+      </h4>
+      <p>
+        To innovate and deliver cutting-edge solutions that empower our clients and contribute positively to the technological landscape.
+      </p>
+    </div>
+  </div>
+
+  <div class="second-section-card">
+    <div class="card-image-wrapper">
+      <img class="card-image" [ngSrc]="'/computers.jpeg'" alt="" fill/>
+    </div>
+    <div>
+      <h4>
+        Our Values
+      </h4>
+      <p>
+        Integrity, Innovation, and Impact are the core values that drive our company forward, ensuring we deliver exceptional results for our clients.      </p>
+    </div>
+  </div>
+
+  <div class="second-section-card">
+    <div class="card-image-wrapper">
+      <img class="card-image" [ngSrc]="'/working.jpg'" alt="" fill/>
+    </div>
+    <div>
+      <h4>
+        How We Work
+      </h4>
+      <p>
+        We follow a collaborative, transparent workflow built around short iterations, continuous feedback, and measurable outcomes. By combining agile practices with clear communication, we ensure every feature delivers real value, not just more code.
+      </p>
+    </div>
+  </div>
+
+  <div class="second-section-card">
+    <div class="card-image-wrapper">
+      <img class="card-image" [ngSrc]="'/handshake.jpg'" alt="" fill/>
+    </div>
+    <div>
+      <h4>
+        Our Services
+      </h4>
+      <p>
+        We provide end-to-end software development services, from product discovery and UX design to scalable backend systems and cloud-native deployments. Our team helps you turn complex ideas into reliable digital products that grow with your business.
+      </p>
+    </div>
+  </div>
+
+</section>
+
+<section class="third-section">
+  <img class="background-third-section" [ngSrc]="'/services-it.jpg'" alt="" fill/>
+
+  <div class="third-card">
+    <div class="card-image-wrapper">
+      <img class="card-image" [ngSrc]="'/one.jpeg'" alt="" fill/>
+    </div>
+    <h3>
+      IT Consulting
+    </h3>
+    <p>
+      Expert advice to optimize your technology strategy and operations.
+    </p>
+  </div>
+
+  <div class="third-card">
+    <div class="card-image-wrapper">
+      <img class="card-image" [ngSrc]="'/two.jpeg'" alt="" fill/>
+    </div>
+    <h3>
+      Software Development
+    </h3>
+    <p>
+      Custom software solutions to drive innovation and efficiency.
+    </p>
+  </div>
+
+  <div class="third-card">
+    <div class="card-image-wrapper">
+      <img class="card-image" [ngSrc]="'/three.jpeg'" alt="" fill/>
+    </div>
+    <h3>
+      Cloud Computing
+    </h3>
+    <p>
+      Efficient and scalable cloud solutions tailored to your business needs.
+    </p>
+  </div>
+
+  <div class="third-card">
+    <div class="card-image-wrapper">
+      <img class="card-image" [ngSrc]="'/four.jpeg'" alt="" fill/>
+    </div>
+    <h3>
+      Cybersecurity
+    </h3>
+    <p>
+      Robust security measures to protect your data and infrastructure.
+    </p>
+  </div>
+</section>
+
+<section class="four-section">
+  <div class="second-section-description">
+    <h3>
+      Reach Out to Us
+    </h3>
+  </div>
+
+  <div class="form-wrapper" [formGroup]="emailUsGroup">
+   <div class="input-wrapper">
+     <input formControlName="name" placeholder="Your Name" />
+   </div>
+    <div class="input-wrapper">
+      <input formControlName="email" placeholder="Your Email" />
+    </div>
+    <div class="input-wrapper-2">
+      <textarea formControlName="message" placeholder="Type your message here"></textarea>
+    </div>
+
+    <button (click)="sendEmail()" class="submit-button">
+      Submit
+    </button>
+  </div>
+</section>
+
+
+<footer class="footer-wrapper">
+
+</footer>
