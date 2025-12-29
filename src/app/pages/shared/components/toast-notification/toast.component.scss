@@ -1,40 +1,48 @@
+@import 'app/pages/shared/style/spacing';
+@import 'app/pages/shared/style/font-size';
+@import 'app/pages/shared/style/breakpoints';
+
 .it-toast-stack {
   position: fixed;
-  top: 16px;
-  right: 16px;
+  top: $spacing-xm;
+  right: $spacing-xm;
   z-index: 9999;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: $spacing-s;
   pointer-events: none;
 }
 
 .it-toast {
   pointer-events: auto;
-  width: 340px;
-  border-radius: 12px;
-  padding: 12px 14px;
+  width: 20rem;
+  border-radius: $spacing-s;
+  padding: $spacing-s $spacing-xm;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 10px;
+  gap: $spacing-s;
 
   background: rgba(5, 8, 22, 0.92);
   color: white;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 $spacing-s $spacing-l rgba(0, 0, 0, 0.25);
   border: 1px solid rgba(255, 255, 255, 0.08);
 
   animation: itToastIn 180ms ease-out;
+
+  @include respond(mld) {
+    width: 100%;
+  }
 }
 
-.it-toast--success { border-left: 4px solid #22c55e; }
-.it-toast--error   { border-left: 4px solid #ef4444; }
-.it-toast--info    { border-left: 4px solid #3b82f6; }
+.it-toast--success { border-left: $spacing-xxs solid #22c55e; }
+.it-toast--error   { border-left: $spacing-xxs solid #ef4444; }
+.it-toast--info    { border-left: $spacing-xxs solid #3b82f6; }
 
 .it-toast__content {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: $spacing-xxs;
 }
 
 .it-toast__title {
@@ -50,7 +58,7 @@
   background: transparent;
   border: 0;
   color: white;
-  font-size: 20px;
+  font-size: $spacing-xml;
   line-height: 1;
   cursor: pointer;
   opacity: 0.8;
@@ -59,6 +67,6 @@
 }
 
 @keyframes itToastIn {
-  from { transform: translateY(-8px); opacity: 0; }
+  from { transform: translateY(-$spacing-xs); opacity: 0; }
   to   { transform: translateY(0); opacity: 1; }
 }
