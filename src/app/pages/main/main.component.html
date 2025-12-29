@@ -3,23 +3,30 @@
     Ionita Tech.
   </h1>
   <div class="main-header-sections">
-    <h3>
+    <h3 (click)="scrollToContact(homeSection)">
+      Home
+    </h3>
+    <h3 (click)="scrollToContact(aboutUsSection)">
       About Us
     </h3>
-    <h3>
+    <h3 (click)="scrollToContact(servicesSection)">
       Services
     </h3>
-    <h3>
+    <h3 (click)="scrollToContact(contactSection)">
       Contact Us
     </h3>
   </div>
 </header>
 
-<section class="first-section">
+<section class="first-section" #homeSection>
 <img class="background-first-section" priority [ngSrc]="'/background.png'" alt="" fill/>
+  <section>
+    <h1>Shaping the Future of Digital Solutions</h1>
+    <p>We build scalable, secure, and modern software solutions that help businesses grow in a digital-first world.</p>
+  </section>
 </section>
 
-<section class="second-section">
+<section class="second-section" #aboutUsSection>
   <div class="second-section-description">
     <h3>
       About Us
@@ -86,7 +93,7 @@
 
 </section>
 
-<section class="third-section">
+<section class="third-section" #servicesSection>
   <img class="background-third-section" priority [ngSrc]="'/services-it.jpg'" alt="" fill/>
 
   <div class="third-card">
@@ -138,7 +145,7 @@
   </div>
 </section>
 
-<section class="four-section">
+<section class="four-section" #contactSection>
   <div class="second-section-description">
     <h3>
       Reach Out to Us

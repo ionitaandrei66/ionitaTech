@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import {NgOptimizedImage} from "@angular/common";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import emailjs, {EmailJSResponseStatus} from '@emailjs/browser';
@@ -15,6 +15,7 @@ import {EMAILJS_CONFIG} from "../shared/const/email-js";
   styleUrl: './main.component.scss'
 })
 export class MainComponent implements OnInit {
+
   public isScrolled: boolean = false;
   public emailUsGroup!: FormGroup;
   private readonly SCROLL_THRESHOLD = 10;
@@ -59,6 +60,13 @@ export class MainComponent implements OnInit {
   @HostListener('window:scroll')
   public onWindowScroll(): void {
     this.isScrolled = window.scrollY > this.SCROLL_THRESHOLD;
+  }
+
+  public scrollToContact(section: HTMLElement) {
+    section.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
   }
 
   public sendEmail() {

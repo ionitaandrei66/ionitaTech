@@ -25,8 +25,19 @@
   align-items: center;
   gap: 40px;
   margin-right: 20px;
+
+  h3 {
+    cursor: pointer;
+  }
 }
 
+.first-section {
+  height: 100vh;
+  display: flex;
+  color: white;
+  align-items: center;
+  margin-left: 5rem;
+}
 
 .third-section {
   width: 100%;
@@ -49,8 +60,7 @@
 
 .background-first-section {
   width: 100% !important;
-  height: auto !important;
-  position: relative !important;
+  height: 100vh !important;
   z-index: -1 !important;
   object-fit: cover !important;
   inset: 0 !important;
