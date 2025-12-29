@@ -1,194 +1,165 @@
-<header class="main-header" [class.main-header--scrolled]="isScrolled">
-  <h1>
-    Ionita Tech.
-  </h1>
-  <div class="main-header-sections">
-    <h3 (click)="scrollToContact(homeSection)">
-      Home
-    </h3>
-    <h3 (click)="scrollToContact(aboutUsSection)">
-      About Us
-    </h3>
-    <h3 (click)="scrollToContact(servicesSection)">
-      Services
-    </h3>
-    <h3 (click)="scrollToContact(contactSection)">
-      Contact Us
-    </h3>
+<header class="it-header" [class.it-header--scrolled]="isScrolled">
+  <h1>Ionita Tech.</h1>
+
+  <div class="it-header__nav">
+    <h3 (click)="scrollToContact(homeSection)">Home</h3>
+    <h3 (click)="scrollToContact(aboutUsSection)">About Us</h3>
+    <h3 (click)="scrollToContact(servicesSection)">Services</h3>
+    <h3 (click)="scrollToContact(contactSection)">Contact Us</h3>
   </div>
 </header>
 
-<section class="first-section" #homeSection>
-<img class="background-first-section" priority [ngSrc]="'/background.png'" alt="" fill/>
-  <section>
+<section class="it-hero" #homeSection>
+  <img class="it-hero__bg" priority [ngSrc]="'/background.png'" alt="" fill />
+  <section class="it-hero__content">
     <h1>Shaping the Future of Digital Solutions</h1>
-    <p>We build scalable, secure, and modern software solutions that help businesses grow in a digital-first world.</p>
+    <p>
+      We build scalable, secure, and modern software solutions that help businesses
+      grow in a digital-first world.
+    </p>
   </section>
 </section>
 
-<section class="second-section" #aboutUsSection>
-  <div class="second-section-description">
-    <h3>
-      About Us
-    </h3>
+<section class="it-about" #aboutUsSection>
+  <div class="it-section__intro">
+    <h3>About Us</h3>
     <p>
-      At Ionita Tech, we are committed to pushing the boundaries of technology to create innovative solutions that empower businesses and individuals alike.
+      At Ionita Tech, we are committed to pushing the boundaries of technology to
+      create innovative solutions that empower businesses and individuals alike.
     </p>
   </div>
 
-  <div class="second-section-card">
-    <div class="card-image-wrapper">
-      <img class="card-image" [ngSrc]="'/together.jpeg'" alt="" fill/>
+  <div class="it-about__card">
+    <div class="it-card__media">
+      <img class="it-card__img" [ngSrc]="'/together.jpeg'" alt="" fill />
     </div>
     <div>
-      <h4>
-        Our Mission
-      </h4>
+      <h4>Our Mission</h4>
       <p>
-        To innovate and deliver cutting-edge solutions that empower our clients and contribute positively to the technological landscape.
+        To innovate and deliver cutting-edge solutions that empower our clients and
+        contribute positively to the technological landscape.
       </p>
     </div>
   </div>
 
-  <div class="second-section-card">
-    <div class="card-image-wrapper">
-      <img class="card-image" [ngSrc]="'/computers.jpeg'" alt="" fill/>
+  <div class="it-about__card">
+    <div class="it-card__media">
+      <img class="it-card__img" [ngSrc]="'/computers.jpeg'" alt="" fill />
     </div>
     <div>
-      <h4>
-        Our Values
-      </h4>
+      <h4>Our Values</h4>
       <p>
-        Integrity, Innovation, and Impact are the core values that drive our company forward, ensuring we deliver exceptional results for our clients.      </p>
-    </div>
-  </div>
-
-  <div class="second-section-card">
-    <div class="card-image-wrapper">
-      <img class="card-image" [ngSrc]="'/working.jpg'" alt="" fill/>
-    </div>
-    <div>
-      <h4>
-        How We Work
-      </h4>
-      <p>
-        We follow a collaborative, transparent workflow built around short iterations, continuous feedback, and measurable outcomes. By combining agile practices with clear communication, we ensure every feature delivers real value, not just more code.
+        Integrity, Innovation, and Impact are the core values that drive our company
+        forward, ensuring we deliver exceptional results for our clients.
       </p>
     </div>
   </div>
 
-  <div class="second-section-card">
-    <div class="card-image-wrapper">
-      <img class="card-image" [ngSrc]="'/handshake.jpg'" alt="" fill/>
+  <div class="it-about__card">
+    <div class="it-card__media">
+      <img class="it-card__img" [ngSrc]="'/working.jpg'" alt="" fill />
     </div>
     <div>
-      <h4>
-        Our Services
-      </h4>
+      <h4>How We Work</h4>
       <p>
-        We provide end-to-end software development services, from product discovery and UX design to scalable backend systems and cloud-native deployments. Our team helps you turn complex ideas into reliable digital products that grow with your business.
+        We follow a collaborative, transparent workflow built around short iterations,
+        continuous feedback, and measurable outcomes. By combining agile practices with
+        clear communication, we ensure every feature delivers real value, not just more code.
       </p>
     </div>
   </div>
 
-</section>
-
-<section class="third-section" #servicesSection>
-  <img class="background-third-section" priority [ngSrc]="'/services-it.jpg'" alt="" fill/>
-
-  <div class="third-card">
-    <div class="card-image-wrapper">
-      <img class="card-image" [ngSrc]="'/one.jpeg'" alt="" fill/>
+  <div class="it-about__card">
+    <div class="it-card__media">
+      <img class="it-card__img" [ngSrc]="'/handshake.jpg'" alt="" fill />
     </div>
-    <h3>
-      IT Consulting
-    </h3>
-    <p>
-      Expert advice to optimize your technology strategy and operations.
-    </p>
-  </div>
-
-  <div class="third-card">
-    <div class="card-image-wrapper">
-      <img class="card-image" [ngSrc]="'/two.jpeg'" alt="" fill/>
+    <div>
+      <h4>Our Services</h4>
+      <p>
+        We provide end-to-end software development services, from product discovery and UX design
+        to scalable backend systems and cloud-native deployments. Our team helps you turn complex
+        ideas into reliable digital products that grow with your business.
+      </p>
     </div>
-    <h3>
-      Software Development
-    </h3>
-    <p>
-      Custom software solutions to drive innovation and efficiency.
-    </p>
-  </div>
-
-  <div class="third-card">
-    <div class="card-image-wrapper">
-      <img class="card-image" [ngSrc]="'/three.jpeg'" alt="" fill/>
-    </div>
-    <h3>
-      Cloud Computing
-    </h3>
-    <p>
-      Efficient and scalable cloud solutions tailored to your business needs.
-    </p>
-  </div>
-
-  <div class="third-card">
-    <div class="card-image-wrapper">
-      <img class="card-image" [ngSrc]="'/four.jpeg'" alt="" fill/>
-    </div>
-    <h3>
-      Cybersecurity
-    </h3>
-    <p>
-      Robust security measures to protect your data and infrastructure.
-    </p>
   </div>
 </section>
 
-<section class="four-section" #contactSection>
-  <div class="second-section-description">
-    <h3>
-      Reach Out to Us
-    </h3>
+<section class="it-services" #servicesSection>
+  <img class="it-services__bg" priority [ngSrc]="'/services-it.jpg'" alt="" fill />
+
+  <div class="it-service-card">
+    <div class="it-card__media">
+      <img class="it-card__img" [ngSrc]="'/one.jpeg'" alt="" fill />
+    </div>
+    <h3>IT Consulting</h3>
+    <p>Expert advice to optimize your technology strategy and operations.</p>
   </div>
 
-  <div class="form-wrapper" [formGroup]="emailUsGroup">
-    <section class="input-full-wrapper">
-   <div class="input-wrapper" [class.input-full-wrapper-disable]="nameInvalid">
-     <input formControlName="name" placeholder="Your Name" />
-   </div>
-      @if (nameInvalid) {
-        <p>Name is required.</p>
-      }
+  <div class="it-service-card">
+    <div class="it-card__media">
+      <img class="it-card__img" [ngSrc]="'/two.jpeg'" alt="" fill />
+    </div>
+    <h3>Software Development</h3>
+    <p>Custom software solutions to drive innovation and efficiency.</p>
+  </div>
+
+  <div class="it-service-card">
+    <div class="it-card__media">
+      <img class="it-card__img" [ngSrc]="'/three.jpeg'" alt="" fill />
+    </div>
+    <h3>Cloud Computing</h3>
+    <p>Efficient and scalable cloud solutions tailored to your business needs.</p>
+  </div>
+
+  <div class="it-service-card">
+    <div class="it-card__media">
+      <img class="it-card__img" [ngSrc]="'/four.jpeg'" alt="" fill />
+    </div>
+    <h3>Cybersecurity</h3>
+    <p>Robust security measures to protect your data and infrastructure.</p>
+  </div>
+</section>
+
+<section class="it-contact" #contactSection>
+  <div class="it-section__intro">
+    <h3>Reach Out to Us</h3>
+  </div>
+
+  <div class="it-contact__form" [formGroup]="emailUsGroup">
+    <section class="it-field">
+      <div class="it-field__control" [class.it-field__control--error]="nameInvalid">
+        <input formControlName="name" placeholder="Your Name" />
+      </div>
+      @if (nameInvalid) { <p>Name is required.</p> }
     </section>
 
-    <section class="input-full-wrapper">
-      <div class="input-wrapper" [class.input-full-wrapper-disable]="emailInvalid">
+    <section class="it-field">
+      <div class="it-field__control" [class.it-field__control--error]="emailInvalid">
         <input formControlName="email" placeholder="Your Email" />
       </div>
-
-      @if (emailInvalid) {
-        <p>Email is required.</p>
-      }
+      @if (emailInvalid) { <p>Email is required.</p> }
     </section>
 
-
-    <section class="input-full-wrapper">
-    <div class="input-wrapper-2" [class.input-full-wrapper-disable]="messageInvalid">
-      <textarea formControlName="message" placeholder="Type your message here"></textarea>
-    </div>
-      @if (messageInvalid) {
-        <p>Message is required.</p>
-      }
+    <section class="it-field">
+      <div
+        class="it-field__control it-field__control--textarea"
+        [class.it-field__control--error]="messageInvalid"
+      >
+        <textarea formControlName="message" placeholder="Type your message here"></textarea>
+      </div>
+      @if (messageInvalid) { <p>Message is required.</p> }
     </section>
 
-    <button (click)="sendEmail()" [disabled]="emailUsGroup.invalid" class="submit-button">
+    <button
+      (click)="sendEmail()"
+      [disabled]="emailUsGroup.invalid"
+      class="it-contact__submit"
+    >
       Submit
     </button>
   </div>
 </section>
 
-
-<footer class="footer-wrapper">
+<footer class="it-footer">
   © 2025 IonitaTech S.R.L. All rights reserved. Developed by IonitaTech.
 </footer>

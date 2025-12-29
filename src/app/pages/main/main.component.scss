@@ -1,4 +1,4 @@
-.main-header {
+.it-header {
   position: absolute;
   color: white;
   width: 100%;
@@ -10,7 +10,7 @@
   justify-content: space-between;
 }
 
-.main-header--scrolled {
+.it-header--scrolled {
   position: fixed;
   top: 0;
   width: 100%;
@@ -20,7 +20,7 @@
   padding: 10px 32px;
 }
 
-.main-header-sections {
+.it-header__nav {
   display: flex;
   align-items: center;
   gap: 40px;
@@ -31,7 +31,7 @@
   }
 }
 
-.first-section {
+.it-hero {
   height: 100vh;
   display: flex;
   color: white;
@@ -39,7 +39,7 @@
   margin-left: 5rem;
 }
 
-.third-section {
+.it-services {
   width: 100%;
   height: 90vh;
   display: flex;
@@ -50,7 +50,7 @@
   gap: 2rem;
 }
 
-.background-third-section {
+.it-services__bg {
   width: 100% !important;
   height: auto !important;
   z-index: -1 !important;
@@ -58,7 +58,7 @@
   inset: 0 !important;
 }
 
-.background-first-section {
+.it-hero__bg {
   width: 100% !important;
   height: 100vh !important;
   z-index: -1 !important;
@@ -66,16 +66,16 @@
   inset: 0 !important;
 }
 
-.card-image {
-  width:100px !important;
-  height:100px !important;
+.it-card__img {
+  width: 100px !important;
+  height: 100px !important;
   object-fit: cover;
   border-radius: 50% !important;
   position: relative !important;
   inset: 0 !important;
 }
 
-.second-section-description {
+.it-section__intro {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -86,13 +86,13 @@
   }
 }
 
-.card-image-wrapper {
+.it-card__media {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.second-section-card {
+.it-about__card {
   box-sizing: border-box;
   background: rgba(5, 8, 22, 0.8);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
@@ -109,18 +109,18 @@
     box-shadow 0.15s ease;
 }
 
-.second-section-card:hover {
+.it-about__card:hover {
   background-color: #4b4f5b;
   transform: translateY(-10px);
   box-shadow: 0 12px 26px rgba(0, 0, 0, 0.3);
 }
 
-.second-section-card:active {
+.it-about__card:active {
   transform: translateY(0);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
 }
 
-.four-section {
+.it-contact {
   box-sizing: border-box;
   background-color: white;
   width: 100%;
@@ -132,7 +132,7 @@
   align-items: center;
 }
 
-.second-section {
+.it-about {
   box-sizing: border-box;
   background-color: white;
   width: 100%;
@@ -144,7 +144,7 @@
   align-items: center;
 }
 
-.third-card {
+.it-service-card {
   width: 250px;
   display: flex;
   flex-direction: column;
@@ -164,18 +164,18 @@
     box-shadow 0.15s ease;
 }
 
-.third-card:hover {
+.it-service-card:hover {
   background-color: #4b4f5b;
   transform: translateY(-10px);
   box-shadow: 0 12px 26px rgba(0, 0, 0, 0.3);
 }
 
-.third-card:active {
+.it-service-card:active {
   transform: translateY(0);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
 }
 
-.input-wrapper-2 {
+.it-field__control--textarea {
   width: 600px;
   display: flex;
   background-color: #f5f5f5;
@@ -193,11 +193,11 @@
   }
 }
 
-.input-full-wrapper-disable {
+.it-field__control--error {
   border: 1px solid red;
 }
 
-.input-wrapper {
+.it-field__control {
   width: 600px;
   height: 25px;
   display: flex;
@@ -215,20 +215,20 @@
   }
 }
 
-.input-full-wrapper {
+.it-field {
   p {
     color: red;
     margin: 0.5rem 0;
   }
 }
 
-.form-wrapper {
+.it-contact__form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-.submit-button {
+.it-contact__submit {
   width: 100%;
   display: flex;
   background: rgba(5, 8, 22, 0.8);
@@ -250,32 +250,32 @@
   letter-spacing: 0.06em;
 }
 
-.submit-button:disabled {
+.it-contact__submit:disabled {
   cursor: not-allowed;
   opacity: 0.6;
   pointer-events: none;
 }
 
-.submit-button:disabled:hover,
-.submit-button:disabled:active,
-.submit-button:disabled:focus {
+.it-contact__submit:disabled:hover,
+.it-contact__submit:disabled:active,
+.it-contact__submit:disabled:focus {
   box-shadow: none;
   transform: none;
   background: inherit;
 }
 
-.submit-button:hover {
+.it-contact__submit:hover {
   background-color: #4b4f5b;
   transform: translateY(-10px);
   box-shadow: 0 12px 26px rgba(0, 0, 0, 0.3);
 }
 
-.submit-button:active {
+.it-contact__submit:active {
   transform: translateY(0);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
 }
 
-.footer-wrapper {
+.it-footer {
   margin-top: 2rem;
   color: white;
   display: flex;
