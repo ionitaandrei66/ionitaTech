@@ -2,10 +2,11 @@
   <h3>Ionita Tech.</h3>
 
   <div class="it-header__nav">
-    <h4 (click)="scrollToContact(homeSection)">Home</h4>
-    <h4 (click)="scrollToContact(aboutUsSection)">About Us</h4>
-    <h4 (click)="scrollToContact(servicesSection)">Services</h4>
-    <h4 (click)="scrollToContact(contactSection)">Contact Us</h4>
+    <h4 class="mobile-menu" (click)="openMenu()">Menu</h4>
+    <h4 class="desktop-menu" (click)="scrollToContact(homeSection)">Home</h4>
+    <h4 class="desktop-menu" (click)="scrollToContact(aboutUsSection)">About Us</h4>
+    <h4 class="desktop-menu" (click)="scrollToContact(servicesSection)">Services</h4>
+    <h4 class="desktop-menu" (click)="scrollToContact(contactSection)">Contact Us</h4>
   </div>
 </header>
 
@@ -87,12 +88,13 @@
 <section class="it-services" #servicesSection>
   <img class="it-services__bg" priority [ngSrc]="'/services-it.jpg'" alt="" fill />
 
+  <div class="it-service-card-wrapper">
   <div class="it-service-card">
     <div class="it-card__media">
       <img class="it-card__img" [ngSrc]="'/one.jpeg'" alt="" fill />
     </div>
     <div class="it-card__description">
-    <h4>IT Consulting</h4>
+    <h3>Consulting</h3>
     <p>Expert advice to optimize your technology strategy and operations.</p>
     </div>
   </div>
@@ -102,7 +104,7 @@
       <img class="it-card__img" [ngSrc]="'/two.jpeg'" alt="" fill />
     </div>
     <div class="it-card__description">
-    <h4>Software Development</h4>
+    <h3>Software</h3>
     <p>Custom software solutions to drive innovation and efficiency.</p>
     </div>
   </div>
@@ -112,7 +114,7 @@
       <img class="it-card__img" [ngSrc]="'/three.jpeg'" alt="" fill />
     </div>
     <div class="it-card__description">
-    <h4>Cloud Computing</h4>
+    <h3>Cloud</h3>
     <p>Efficient and scalable cloud solutions tailored to your business needs.</p>
     </div>
   </div>
@@ -122,9 +124,10 @@
       <img class="it-card__img" [ngSrc]="'/four.jpeg'" alt="" fill />
     </div>
     <div class="it-card__description">
-    <h4>Cybersecurity</h4>
+    <h3>Cybersecurity</h3>
     <p>Robust security measures to protect your data and infrastructure.</p>
     </div>
+  </div>
   </div>
 </section>
 

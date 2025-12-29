@@ -1,5 +1,6 @@
 @import '../shared/style/spacing';
 @import '../shared/style/font-size';
+@import '../shared/style/breakpoints';
 
 .it-header {
   position: absolute;
@@ -11,6 +12,10 @@
   z-index: 2;
   display: flex;
   justify-content: space-between;
+
+  @include respond(fivek) {
+    padding: $spacing-m $spacing-2xl;
+  }
 }
 
 .it-header--scrolled {
@@ -29,6 +34,21 @@
   gap: $spacing-xl;
   margin-right: $spacing-m;
 
+  .mobile-menu {
+    display: none;
+  }
+
+  @include respond(mld-ml) {
+    margin-right: 0;
+
+    .mobile-menu {
+      display: block;
+    }
+    .desktop-menu {
+      display: none;
+    }
+  }
+
   h3 {
     cursor: pointer;
   }
@@ -40,22 +60,34 @@
   color: white;
   align-items: center;
   margin-left: $spacing-5xl;
+
+  @include respond(mld-ml) {
+    margin: $spacing-l;
+  }
 }
 
 .it-services {
   width: 100%;
-  height: 90vh;
   display: flex;
   position: relative;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+}
+
+.it-service-card-wrapper {
+  display: flex;
+  position: absolute;
+  width: 100%;
   gap: $spacing-l;
+  padding: $spacing-l;
+  justify-content: space-around;
 }
 
 .it-services__bg {
   width: 100% !important;
   height: auto !important;
+  position: relative !important;
   z-index: -1 !important;
   object-fit: cover !important;
   inset: 0 !important;
@@ -87,6 +119,12 @@
   p {
     width: 70%;
   }
+
+  @include respond(mld-ml) {
+    p {
+      width: 100%;
+    }
+  }
 }
 
 .it-card__media {
@@ -110,6 +148,14 @@
     background-color 0.2s ease,
     transform 0.15s ease,
     box-shadow 0.15s ease;
+
+  @include respond(mld-ml) {
+    display: flex;
+    flex-direction: column;
+    padding: $spacing-l;
+    text-align: center;
+    width: 100%;
+  }
 }
 
 .it-about__card:hover {
@@ -145,23 +191,27 @@
   position: relative;
   flex-direction: column;
   align-items: center;
+
+  @include respond(mld-ml) {
+    padding: $spacing-l;
+  }
 }
 
 .it-service-card {
-  width: 250px;
+  width: 13rem;
   display: flex;
   flex-direction: column;
-  height: 350px;
+  justify-content: space-between;
+  height: 21rem;
   color: white;
   text-align: center;
   box-sizing: border-box;
   align-items: center;
   background: rgba(5, 8, 22, 0.8);
   box-shadow: 0 $spacing-xxs $spacing-s rgba(0, 0, 0, 0.25);
-  padding: $spacing-m $spacing-m;
+  padding: $spacing-m $spacing-m $spacing-2xl;
   gap: $spacing-m;
   border-radius: $spacing-s;
-  justify-content: space-between;
   transition:
     background-color 0.2s ease,
     transform 0.15s ease,
@@ -194,7 +244,7 @@
 }
 
 .it-field__control--textarea {
-  width: 600px;
+  width: 37.5rem;
   display: flex;
   height: auto !important;
   background-color: #f5f5f5;
@@ -216,7 +266,7 @@
 }
 
 .it-field__control {
-  width: 600px;
+  width: 37.5rem;
   display: flex;
   background-color: #f5f5f5;
   box-shadow: 0 $spacing-xxxs $spacing-xs rgba(0, 0, 0, 0.25);
@@ -302,4 +352,8 @@
   height: auto;
   align-items: center;
   justify-content: center;
+
+  @include respond(mld-ml) {
+    text-align: center;
+  }
 }
