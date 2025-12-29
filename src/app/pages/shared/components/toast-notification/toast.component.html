@@ -1,0 +1,18 @@
+<div class="it-toast-stack" aria-live="polite">
+  <div
+    class="it-toast"
+    *ngFor="let t of toast.toasts(); trackBy: trackById"
+    [class.it-toast--success]="t.type === 'success'"
+    [class.it-toast--error]="t.type === 'error'"
+    [class.it-toast--info]="t.type === 'info'"
+  >
+    <div class="it-toast__content">
+      <div class="it-toast__title" *ngIf="t.title">{{ t.title }}</div>
+      <div class="it-toast__msg">{{ t.message }}</div>
+    </div>
+
+    <button class="it-toast__close" type="button" (click)="close(t.id)" aria-label="Close">
+      ×
+    </button>
+  </div>
+</div>

@@ -1,8 +1,9 @@
-import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
+import {Component, HostListener, OnInit } from '@angular/core';
 import {NgOptimizedImage} from "@angular/common";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import emailjs, {EmailJSResponseStatus} from '@emailjs/browser';
+import emailjs from '@emailjs/browser';
 import {EMAILJS_CONFIG} from "../shared/const/email-js";
+import {ToastService} from "../shared/services/toast.service";
 
 @Component({
   selector: 'app-main',
@@ -20,7 +21,7 @@ export class MainComponent implements OnInit {
   public emailUsGroup!: FormGroup;
   private readonly SCROLL_THRESHOLD = 10;
 
-  constructor(private _fb: FormBuilder) {}
+  constructor(private _fb: FormBuilder, private toast: ToastService) {}
 
   get emailCtrl() {
     return this.emailUsGroup.get('email');
@@ -70,17 +71,20 @@ export class MainComponent implements OnInit {
   }
 
   public sendEmail() {
-   emailjs.send(  EMAILJS_CONFIG.serviceId,
+   emailjs.send(EMAILJS_CONFIG.serviceId,
      EMAILJS_CONFIG.templateId, {
      name: this.emailUsGroup.controls['name'].value,
      email: this.emailUsGroup.controls['email'].value,
      message: this.emailUsGroup.controls['message'].value
    }, {
      publicKey: EMAILJS_CONFIG.publicKey,
-   }).then((status: EmailJSResponseStatus) =>
-   console.log(status)
-   )
+   }) .then(() => {
+     this.toast.success('Message sent successfully!', { title: 'Success' });
+     this.emailUsGroup.reset();
+   })
+     .catch(() => {
+       this.toast.error('Something went wrong. Please try again.', { title: 'Error' });
+     });
   }
 }
-//todo notification for succed plus make it on the instland the modal for request
-// + disable and make error for form input
+
