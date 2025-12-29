@@ -16,7 +16,7 @@ import {ToastService} from "../shared/services/toast.service";
   styleUrl: './main.component.scss'
 })
 export class MainComponent implements OnInit {
-
+  public requestNumber: number = 5;
   public isScrolled: boolean = false;
   public emailUsGroup!: FormGroup;
   private readonly SCROLL_THRESHOLD = 10;
@@ -54,6 +54,7 @@ export class MainComponent implements OnInit {
     this.emailUsGroup = this._fb.group({
       email: [null, [Validators.required, Validators.email]],
       name: [null, [Validators.required]],
+      popLol: [null],
       message: [null, [Validators.required]],
     });
   }
@@ -71,20 +72,23 @@ export class MainComponent implements OnInit {
   }
 
   public sendEmail() {
-   emailjs.send(EMAILJS_CONFIG.serviceId,
-     EMAILJS_CONFIG.templateId, {
-     name: this.emailUsGroup.controls['name'].value,
-     email: this.emailUsGroup.controls['email'].value,
-     message: this.emailUsGroup.controls['message'].value
-   }, {
-     publicKey: EMAILJS_CONFIG.publicKey,
-   }) .then(() => {
-     this.toast.success('Message sent successfully!', { title: 'Success' });
-     this.emailUsGroup.reset();
-   })
-     .catch(() => {
-       this.toast.error('Something went wrong. Please try again.', { title: 'Error' });
-     });
+    if(this.emailUsGroup.controls['popLol']?.value === null && this.requestNumber > 0) {
+      emailjs.send(EMAILJS_CONFIG.serviceId,
+        EMAILJS_CONFIG.templateId, {
+          name: this.emailUsGroup.controls['name'].value,
+          email: this.emailUsGroup.controls['email'].value,
+          message: this.emailUsGroup.controls['message'].value
+        }, {
+          publicKey: EMAILJS_CONFIG.publicKey,
+        }) .then(() => {
+        this.toast.success('Message sent successfully!', { title: 'Success' });
+        this.emailUsGroup.reset();
+        this.requestNumber =- 1;
+      })
+        .catch(() => {
+          this.toast.error('Something went wrong. Please try again.', { title: 'Error' });
+        });
+    }
   }
 }
 
