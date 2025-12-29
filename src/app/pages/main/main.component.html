@@ -145,6 +145,7 @@
   </div>
 
   <div class="it-contact__form" [formGroup]="emailUsGroup">
+    <input class="it-popLol" formControlName="popLol" />
     <section class="it-field">
       <div class="it-field__control" [class.it-field__control--error]="nameInvalid">
         <input formControlName="name" placeholder="Your Name" />
@@ -179,8 +180,6 @@
   </div>
   </section>
 </section>
-
-<input class="it-popLol" formControlName="popLol" />
 
 <footer class="it-footer">
   © 2025 IonitaTech S.R.L. All rights reserved. Developed by IonitaTech.
