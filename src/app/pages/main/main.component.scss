@@ -1,8 +1,11 @@
+@import '../shared/style/spacing';
+@import '../shared/style/font-size';
+
 .it-header {
   position: absolute;
   color: white;
   width: 100%;
-  padding: 10px 50px;
+  padding: 0 $spacing-2xl;
   box-sizing: border-box;
   top: 0;
   z-index: 2;
@@ -16,15 +19,15 @@
   width: 100%;
   box-sizing: border-box;
   background: #050816cc;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-  padding: 10px 32px;
+  box-shadow: 0 $spacing-xxs $spacing-s rgba(0,0,0,0.25);
+  padding: $spacing-xs $spacing-l;
 }
 
 .it-header__nav {
   display: flex;
   align-items: center;
-  gap: 40px;
-  margin-right: 20px;
+  gap: $spacing-xl;
+  margin-right: $spacing-m;
 
   h3 {
     cursor: pointer;
@@ -36,7 +39,7 @@
   display: flex;
   color: white;
   align-items: center;
-  margin-left: 5rem;
+  margin-left: $spacing-5xl;
 }
 
 .it-services {
@@ -47,7 +50,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 2rem;
+  gap: $spacing-l;
 }
 
 .it-services__bg {
@@ -67,8 +70,8 @@
 }
 
 .it-card__img {
-  width: 100px !important;
-  height: 100px !important;
+  width: $font-size-h0-4-5 !important;
+  height: $font-size-h0-4-5 !important;
   object-fit: cover;
   border-radius: 50% !important;
   position: relative !important;
@@ -95,14 +98,14 @@
 .it-about__card {
   box-sizing: border-box;
   background: rgba(5, 8, 22, 0.8);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-  padding: 10px 32px;
+  box-shadow: 0 $spacing-xxs $spacing-s rgba(0, 0, 0, 0.25);
+  padding: $spacing-s $spacing-l;
   color: white;
   width: 70%;
   display: flex;
-  border-radius: 10px;
+  border-radius: $spacing-s;
   align-items: center;
-  gap: 2rem;
+  gap: $spacing-l;
   transition:
     background-color 0.2s ease,
     transform 0.15s ease,
@@ -111,21 +114,21 @@
 
 .it-about__card:hover {
   background-color: #4b4f5b;
-  transform: translateY(-10px);
-  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.3);
+  transform: translateY(-$spacing-s);
+  box-shadow: 0 $spacing-s $spacing-m rgba(0, 0, 0, 0.3);
 }
 
 .it-about__card:active {
   transform: translateY(0);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 $spacing-xs $spacing-xm rgba(0, 0, 0, 0.25);
 }
 
 .it-contact {
   box-sizing: border-box;
   background-color: white;
   width: 100%;
-  gap: 2rem;
-  padding: 3rem;
+  gap: $spacing-l;
+  padding: $spacing-2xl;
   display: flex;
   position: relative;
   flex-direction: column;
@@ -136,8 +139,8 @@
   box-sizing: border-box;
   background-color: white;
   width: 100%;
-  gap: 2rem;
-  padding: 3rem;
+  gap: $spacing-l;
+  padding: $spacing-2xl;
   display: flex;
   position: relative;
   flex-direction: column;
@@ -152,27 +155,42 @@
   color: white;
   text-align: center;
   box-sizing: border-box;
-  background: rgba(5, 8, 22, 0.8);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-  padding: 20px 20px;
-  gap: 20px;
-  border-radius: 10px;
   align-items: center;
+  background: rgba(5, 8, 22, 0.8);
+  box-shadow: 0 $spacing-xxs $spacing-s rgba(0, 0, 0, 0.25);
+  padding: $spacing-m $spacing-m;
+  gap: $spacing-m;
+  border-radius: $spacing-s;
+  justify-content: space-between;
   transition:
     background-color 0.2s ease,
     transform 0.15s ease,
     box-shadow 0.15s ease;
+
+  h4 {
+    margin: 0;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .it-card__description {
+    gap: $spacing-l;
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .it-service-card:hover {
   background-color: #4b4f5b;
-  transform: translateY(-10px);
-  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.3);
+  transform: translateY(-$spacing-s);
+  box-shadow: 0 $spacing-s $spacing-m rgba(0, 0, 0, 0.3);
 }
 
 .it-service-card:active {
   transform: translateY(0);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 $spacing-xs $spacing-xm rgba(0, 0, 0, 0.25);
 }
 
 .it-field__control--textarea {
@@ -180,15 +198,15 @@
   display: flex;
   height: auto !important;
   background-color: #f5f5f5;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  border-radius: 10px;
-  padding: 15px;
+  box-shadow: 0 $spacing-xxxs $spacing-xs rgba(0, 0, 0, 0.25);
+  border-radius: $spacing-s;
+  padding: $spacing-xm;
   align-items: flex-start;
 
   textarea {
     width: 100%;
     border: 0;
-    font-size: 1rem;
+    font-size: $font-size-paragraph-1;
     background-color: transparent;
   }
 }
@@ -199,18 +217,17 @@
 
 .it-field__control {
   width: 600px;
-  height: 25px;
   display: flex;
   background-color: #f5f5f5;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  border-radius: 10px;
-  padding: 15px;
+  box-shadow: 0 $spacing-xxxs $spacing-xs rgba(0, 0, 0, 0.25);
+  border-radius: $spacing-s;
+  padding: $spacing-xm;
   align-items: center;
 
   input {
     width: 100%;
     border: 0;
-    font-size: 1rem;
+    font-size: $font-size-paragraph-1;
     background-color: transparent;
   }
 }
@@ -218,14 +235,14 @@
 .it-field {
   p {
     color: red;
-    margin: 0.5rem 0;
+    margin: $spacing-xs 0;
   }
 }
 
 .it-contact__form {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: $spacing-xm;
 }
 
 .it-contact__submit {
@@ -233,12 +250,12 @@
   display: flex;
   background: rgba(5, 8, 22, 0.8);
   height: auto;
-  font-size: x-large;
+  font-size: $font-size-paragraph-1;
   color: white;
   border: 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  border-radius: 10px;
-  padding: 15px;
+  box-shadow: 0 $spacing-xxxs $spacing-xs rgba(0, 0, 0, 0.25);
+  border-radius: $spacing-s;
+  padding: $spacing-xm;
   align-items: center;
   justify-content: center;
   text-transform: uppercase;
@@ -266,20 +283,20 @@
 
 .it-contact__submit:hover {
   background-color: #4b4f5b;
-  transform: translateY(-10px);
-  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.3);
+  transform: translateY(-$spacing-s);
+  box-shadow: 0 $spacing-s $spacing-m rgba(0, 0, 0, 0.3);
 }
 
 .it-contact__submit:active {
   transform: translateY(0);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 $spacing-xxs $spacing-xm rgba(0, 0, 0, 0.25);
 }
 
 .it-footer {
-  margin-top: 2rem;
+  margin-top: $spacing-l;
   color: white;
   display: flex;
-  padding: 1rem;
+  padding: $spacing-xm;
   background: rgba(5, 8, 22, 0.8);
   width: 100%;
   height: auto;

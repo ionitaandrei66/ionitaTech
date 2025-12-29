@@ -1,0 +1,55 @@
+// --- Breakpoints ---
+$breakpoints: (
+  min: 250px,
+  xs: 320px,
+  // telefoane foarte mici (vechi)
+  sm: 375px,
+  // iPhone 12/13 Mini, iPhone 15 Pro, Galaxy S22
+  md: 414px,
+  // iPhone 14 Pro Max, Galaxy Note
+  mld: 500px,
+  // custom
+  ml: 650px,
+  // custom
+  lg: 768px,
+  // tablete portret
+  xl: 1024px,
+  // tablete landscape
+  xxl: 1280px,
+  // laptopuri mici, tablete mari landscape
+  xxxl: 1440px,
+  // laptop normal, desktop mic
+  quad: 1600px,
+  // monitoare 2K normale
+  fivek: 1920px,
+  // Full HD și monitoare mari
+  max: 2100px // 2K+ rezoluții
+);
+
+// --- Mixin pentru un singur breakpoint ---
+@mixin respond($breakpoint) {
+  @media (max-width: map-get($breakpoints, $breakpoint)) {
+    @content;
+  }
+}
+
+// --- Mixin pentru între două breakpoints ---
+@mixin respond-between($breakpoint-min, $breakpoint-max) {
+  @media (min-width: calc(map-get($breakpoints, $breakpoint-min) + 1px)) and (max-width: map-get($breakpoints, $breakpoint-max)) {
+    @content;
+  }
+}
+
+// --- Mixin pentru min-width (mobile first design) ---
+@mixin respond-min($breakpoint) {
+  @media (min-width: map-get($breakpoints, $breakpoint)) {
+    @content;
+  }
+}
+
+// --- Mixin pentru ecrane mai mari decât 2100px (infinit) ---
+@mixin respond-infinite {
+  @media (min-width: calc(map-get($breakpoints, max) + 1px)) {
+    @content;
+  }
+}

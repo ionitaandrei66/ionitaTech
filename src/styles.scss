@@ -1,7 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'app/pages/shared/style/spacing';
 
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
 
 html, body {
+  font-size: clamp(14px, 1.5vw, 76px);
   margin:0;
   padding: 0;
   width: 100%;
