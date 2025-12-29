@@ -64,14 +64,14 @@ export class MainComponent implements OnInit {
     this.isScrolled = window.scrollY > this.SCROLL_THRESHOLD;
   }
 
-  public scrollToContact(section: HTMLElement) {
+  public scrollToContact(section: HTMLElement): void {
     section.scrollIntoView({
       behavior: 'smooth',
       block: 'start',
     });
   }
 
-  public sendEmail() {
+  public sendEmail(): void {
     if(this.emailUsGroup.controls['popLol']?.value === null && this.requestNumber > 0) {
       emailjs.send(EMAILJS_CONFIG.serviceId,
         EMAILJS_CONFIG.templateId, {
