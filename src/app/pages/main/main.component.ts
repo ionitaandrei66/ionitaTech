@@ -16,7 +16,7 @@ import {ToastService} from "../shared/services/toast.service";
   styleUrl: './main.component.scss'
 })
 export class MainComponent implements OnInit {
-  public requestNumber: number = 5;
+  private requestNumber: number = 5;
   public isScrolled: boolean = false;
   public emailUsGroup!: FormGroup;
   private readonly SCROLL_THRESHOLD = 10;
