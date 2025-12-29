@@ -16,7 +16,7 @@
 </header>
 
 <section class="first-section">
-<img class="background-first-section" [ngSrc]="'/background.png'" alt="" fill/>
+<img class="background-first-section" priority [ngSrc]="'/background.png'" alt="" fill/>
 </section>
 
 <section class="second-section">
@@ -87,7 +87,7 @@
 </section>
 
 <section class="third-section">
-  <img class="background-third-section" [ngSrc]="'/services-it.jpg'" alt="" fill/>
+  <img class="background-third-section" priority [ngSrc]="'/services-it.jpg'" alt="" fill/>
 
   <div class="third-card">
     <div class="card-image-wrapper">
@@ -146,17 +146,36 @@
   </div>
 
   <div class="form-wrapper" [formGroup]="emailUsGroup">
-   <div class="input-wrapper">
+    <section class="input-full-wrapper">
+   <div class="input-wrapper" [class.input-full-wrapper-disable]="nameInvalid">
      <input formControlName="name" placeholder="Your Name" />
    </div>
-    <div class="input-wrapper">
-      <input formControlName="email" placeholder="Your Email" />
-    </div>
-    <div class="input-wrapper-2">
+      @if (nameInvalid) {
+        <p>Name is required.</p>
+      }
+    </section>
+
+    <section class="input-full-wrapper">
+      <div class="input-wrapper" [class.input-full-wrapper-disable]="emailInvalid">
+        <input formControlName="email" placeholder="Your Email" />
+      </div>
+
+      @if (emailInvalid) {
+        <p>Email is required.</p>
+      }
+    </section>
+
+
+    <section class="input-full-wrapper">
+    <div class="input-wrapper-2" [class.input-full-wrapper-disable]="messageInvalid">
       <textarea formControlName="message" placeholder="Type your message here"></textarea>
     </div>
+      @if (messageInvalid) {
+        <p>Message is required.</p>
+      }
+    </section>
 
-    <button (click)="sendEmail()" class="submit-button">
+    <button (click)="sendEmail()" [disabled]="emailUsGroup.invalid" class="submit-button">
       Submit
     </button>
   </div>

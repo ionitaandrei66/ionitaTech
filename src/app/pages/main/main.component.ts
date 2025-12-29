@@ -15,17 +15,44 @@ import {EMAILJS_CONFIG} from "../shared/const/email-js";
   styleUrl: './main.component.scss'
 })
 export class MainComponent implements OnInit {
-  public isScrolled = false;
+  public isScrolled: boolean = false;
   public emailUsGroup!: FormGroup;
   private readonly SCROLL_THRESHOLD = 10;
 
   constructor(private _fb: FormBuilder) {}
 
+  get emailCtrl() {
+    return this.emailUsGroup.get('email');
+  }
+
+  get emailInvalid(): boolean {
+    const c = this.emailCtrl;
+    return !!(c && c.invalid && (c.touched || c.dirty));
+  }
+
+  get nameCtrl() {
+    return this.emailUsGroup.get('name');
+  }
+
+  get nameInvalid(): boolean {
+    const c = this.nameCtrl;
+    return !!(c && c.invalid && (c.touched || c.dirty));
+  }
+
+  get messageCtrl() {
+    return this.emailUsGroup.get('message');
+  }
+
+  get messageInvalid(): boolean {
+    const c = this.messageCtrl;
+    return !!(c && c.invalid && (c.touched || c.dirty));
+  }
+
   public ngOnInit() {
     this.emailUsGroup = this._fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      name: ['', [Validators.required]],
-      message: ['', [Validators.required, Validators.minLength(6)]],
+      email: [null, [Validators.required, Validators.email]],
+      name: [null, [Validators.required]],
+      message: [null, [Validators.required]],
     });
   }
 

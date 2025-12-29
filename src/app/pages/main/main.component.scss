@@ -183,6 +183,10 @@
   }
 }
 
+.input-full-wrapper-disable {
+  border: 1px solid red;
+}
+
 .input-wrapper {
   width: 600px;
   height: 25px;
@@ -198,6 +202,13 @@
     border: 0;
     font-size: 1rem;
     background-color: transparent;
+  }
+}
+
+.input-full-wrapper {
+  p {
+    color: red;
+    margin: 0.5rem 0;
   }
 }
 
@@ -227,6 +238,20 @@
     box-shadow 0.15s ease;
   font-weight: 600;
   letter-spacing: 0.06em;
+}
+
+.submit-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.submit-button:disabled:hover,
+.submit-button:disabled:active,
+.submit-button:disabled:focus {
+  box-shadow: none;
+  transform: none;
+  background: inherit;
 }
 
 .submit-button:hover {
