@@ -34,16 +34,9 @@
   gap: $spacing-xl;
   margin-right: $spacing-m;
 
-  .mobile-menu {
-    display: none;
-  }
-
   @include respond(mld-ml) {
     margin-right: 0;
 
-    .mobile-menu {
-      display: block;
-    }
     .desktop-menu {
       display: none;
     }
@@ -203,6 +196,10 @@
   position: relative;
   flex-direction: column;
   align-items: center;
+
+  @include respond(lg) {
+    padding: $spacing-l;
+  }
 }
 
 .it-about {
@@ -314,6 +311,10 @@
     font-size: $font-size-paragraph-1;
     background-color: transparent;
   }
+
+  @include respond(lg) {
+    width: 100%;
+  }
 }
 
 .it-field {
@@ -389,5 +390,17 @@
 
   @include respond(mld-ml) {
     text-align: center;
+  }
+}
+
+.it-contact-modal {
+  background: rgba(5, 8, 22, 0.8);
+  box-shadow: 0 $spacing-xxs $spacing-s rgba(0, 0, 0, 0.25);
+  padding: $spacing-l;
+  border-radius: $spacing-s;
+  color: white;
+
+  @include respond(lg) {
+    width: 100%;
   }
 }

@@ -86,9 +86,5 @@ export class MainComponent implements OnInit {
        this.toast.error('Something went wrong. Please try again.', { title: 'Error' });
      });
   }
-
-  public openMenu() {
-
-  }
 }
 
