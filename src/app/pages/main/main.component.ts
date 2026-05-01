@@ -10,18 +10,14 @@ import { SceneComponent } from '../components/scene/scene.component';
 @Component({
   selector: 'app-main',
   standalone: true,
-  imports: [
-    NgOptimizedImage,
-    ReactiveFormsModule,
-    SceneComponent,
-  ],
+  imports: [NgOptimizedImage, ReactiveFormsModule, SceneComponent],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss',
 })
 export class MainComponent implements OnInit {
   private requestNumber = 5;
-  private lastScrollTop = 0;
   private isWheelLocked = false;
+  private pendingSectionDirection: 1 | -1 | 0 = 0;
 
   public isScrolled = false;
   public emailUsGroup!: FormGroup;
@@ -68,43 +64,10 @@ export class MainComponent implements OnInit {
 
   public onContentWheel(event: WheelEvent, container: HTMLElement): void {
     event.preventDefault();
+    event.stopPropagation();
 
-    if (this.isWheelLocked) {
-      return;
-    }
-
-    this.isWheelLocked = true;
-
-    const sections = Array.from(container.querySelectorAll<HTMLElement>('.it-section'));
-    const currentIndex = Math.round(container.scrollTop / window.innerHeight);
-    const direction = event.deltaY > 0 ? 1 : -1;
-
-    const nextIndex = Math.max(
-      0,
-      Math.min(sections.length - 1, currentIndex + direction),
-    );
-
-    window.dispatchEvent(
-      new CustomEvent('planet-scroll', {
-        detail: { delta: event.deltaY },
-      }),
-    );
-
-    sections[nextIndex]?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    });
-
-    setTimeout(() => {
-      this.isWheelLocked = false;
-    }, 850);
-  }
-
-  public onContentScroll(container: HTMLElement): void {
-    const currentScrollTop = container.scrollTop;
-    const delta = currentScrollTop - this.lastScrollTop;
-
-    this.isScrolled = currentScrollTop > this.SCROLL_THRESHOLD;
+    const delta = event.deltaY;
+    const direction: 1 | -1 = delta > 0 ? 1 : -1;
 
     window.dispatchEvent(
       new CustomEvent('planet-scroll', {
@@ -112,14 +75,110 @@ export class MainComponent implements OnInit {
       }),
     );
 
-    this.lastScrollTop = currentScrollTop;
+    const sections = Array.from(container.querySelectorAll<HTMLElement>('.it-section'));
+    const activeIndex = this.getActiveSectionIndex(container, sections);
+    const activeSection = sections[activeIndex];
+    const activePanel = activeSection?.querySelector<HTMLElement>('.it-section__panel');
+
+    if (activePanel && this.scrollPanelIfPossible(activePanel, delta)) {
+      this.pendingSectionDirection = 0;
+      return;
+    }
+
+    if (activePanel && this.panelHasScroll(activePanel)) {
+      if (this.pendingSectionDirection !== direction) {
+        this.pendingSectionDirection = direction;
+        return;
+      }
+    }
+
+    if (this.isWheelLocked) {
+      return;
+    }
+
+    const nextIndex = Math.max(0, Math.min(sections.length - 1, activeIndex + direction));
+
+    if (nextIndex === activeIndex) {
+      return;
+    }
+
+    this.pendingSectionDirection = 0;
+    this.isWheelLocked = true;
+
+    container.scrollTo({
+      top: sections[nextIndex].offsetTop,
+      behavior: 'smooth',
+    });
+
+    setTimeout(() => {
+      this.isWheelLocked = false;
+    }, 750);
+  }
+
+  public onContentScroll(container: HTMLElement): void {
+    this.isScrolled = container.scrollTop > this.SCROLL_THRESHOLD;
   }
 
   public scrollToSection(section: HTMLElement): void {
-    section.scrollIntoView({
+    const container = document.querySelector<HTMLElement>('.it-scroll-content');
+
+    if (!container) {
+      return;
+    }
+
+    this.pendingSectionDirection = 0;
+
+    container.scrollTo({
+      top: section.offsetTop,
       behavior: 'smooth',
-      block: 'start',
     });
+  }
+
+  private getActiveSectionIndex(container: HTMLElement, sections: HTMLElement[]): number {
+    const scrollTop = container.scrollTop;
+    let activeIndex = 0;
+    let smallestDistance = Number.MAX_SAFE_INTEGER;
+
+    sections.forEach((section, index) => {
+      const distance = Math.abs(section.offsetTop - scrollTop);
+
+      if (distance < smallestDistance) {
+        smallestDistance = distance;
+        activeIndex = index;
+      }
+    });
+
+    return activeIndex;
+  }
+
+  private panelHasScroll(panel: HTMLElement): boolean {
+    return panel.scrollHeight > panel.clientHeight + 1;
+  }
+
+  private scrollPanelIfPossible(panel: HTMLElement, delta: number): boolean {
+    const maxScrollTop = panel.scrollHeight - panel.clientHeight;
+
+    if (maxScrollTop <= 1) {
+      return false;
+    }
+
+    const isDown = delta > 0;
+    const isUp = delta < 0;
+
+    const isAtTop = panel.scrollTop <= 0;
+    const isAtBottom = panel.scrollTop >= maxScrollTop - 1;
+
+    if (isDown && !isAtBottom) {
+      panel.scrollTop = Math.min(maxScrollTop, panel.scrollTop + Math.abs(delta));
+      return true;
+    }
+
+    if (isUp && !isAtTop) {
+      panel.scrollTop = Math.max(0, panel.scrollTop - Math.abs(delta));
+      return true;
+    }
+
+    return false;
   }
 
   public sendEmail(): void {
