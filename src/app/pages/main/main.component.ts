@@ -74,9 +74,10 @@ export class MainComponent implements OnInit {
       return;
     }
 
+    const direction: 1 | -1 = delta > 0 ? 1 : -1;
+
     this.rotatePlanet(delta);
 
-    const direction: 1 | -1 = delta > 0 ? 1 : -1;
     const sections = Array.from(container.querySelectorAll<HTMLElement>('.it-section'));
     const activeIndex = this.getActiveSectionIndex(container, sections);
     const activeSection = sections[activeIndex];
@@ -107,7 +108,7 @@ export class MainComponent implements OnInit {
     this.pendingSectionDirection = 0;
     this.isWheelLocked = true;
 
-    this.rotatePlanet(delta * 2);
+    this.rotatePlanet(direction * 900);
 
     container.scrollTo({
       top: sections[nextIndex].offsetTop,
@@ -131,6 +132,7 @@ export class MainComponent implements OnInit {
     }
 
     this.pendingSectionDirection = 0;
+    this.rotatePlanet(900);
 
     container.scrollTo({
       top: section.offsetTop,
@@ -141,7 +143,10 @@ export class MainComponent implements OnInit {
   private rotatePlanet(delta: number): void {
     window.dispatchEvent(
       new CustomEvent('planet-scroll', {
-        detail: { delta },
+        detail: {
+          delta,
+          force: Math.sign(delta) * 1.8,
+        },
       }),
     );
   }

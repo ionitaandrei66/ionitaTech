@@ -33,7 +33,6 @@ export class SceneComponent implements AfterViewInit, OnDestroy {
 
   private rotationBoost = 0;
 
-  // 👉 mouse drag
   private isDragging = false;
   private lastPointerX = 0;
 
@@ -45,8 +44,8 @@ export class SceneComponent implements AfterViewInit, OnDestroy {
     this.loadPlanet();
     this.startRenderLoop();
     this.observeResize();
-    this.addScrollRotation();
-    this.addMouseRotation(); // 👈 IMPORTANT
+    this.addPlanetScrollRotation();
+    this.addMouseRotation();
   }
 
   ngOnDestroy(): void {
@@ -54,7 +53,7 @@ export class SceneComponent implements AfterViewInit, OnDestroy {
       cancelAnimationFrame(this.animationFrameId);
     }
 
-    window.removeEventListener('wheel', this.onWheel);
+    window.removeEventListener('planet-scroll', this.onPlanetScroll);
     this.renderer.domElement.removeEventListener('pointerdown', this.onPointerDown);
     window.removeEventListener('pointermove', this.onPointerMove);
     window.removeEventListener('pointerup', this.onPointerUp);
@@ -110,11 +109,9 @@ export class SceneComponent implements AfterViewInit, OnDestroy {
 
     this.camera.lookAt(this.planetHolder.position);
 
-    // 👇 dezactivam complet miscarea camerei
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.controls.enabled = false;
 
-    // lumini
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.025);
     this.scene.add(ambientLight);
 
@@ -159,7 +156,9 @@ export class SceneComponent implements AfterViewInit, OnDestroy {
       gltf.scene.traverse((object) => {
         const mesh = object as THREE.Mesh;
 
-        if (!mesh.isMesh || !mesh.material || colorTexture) return;
+        if (!mesh.isMesh || !mesh.material || colorTexture) {
+          return;
+        }
 
         const mat = Array.isArray(mesh.material) ? mesh.material[0] : mesh.material;
 
@@ -193,7 +192,8 @@ export class SceneComponent implements AfterViewInit, OnDestroy {
         if (this.planetModel) {
           this.planetModel.rotation.y += 0.0007 + this.rotationBoost;
 
-          this.rotationBoost *= 0.92;
+          this.rotationBoost *= 0.91;
+
           if (Math.abs(this.rotationBoost) < 0.00001) {
             this.rotationBoost = 0;
           }
@@ -207,20 +207,21 @@ export class SceneComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  // SCROLL ROTATION
-  private addScrollRotation(): void {
-    window.addEventListener('wheel', this.onWheel, { passive: false });
+  private addPlanetScrollRotation(): void {
+    window.addEventListener('planet-scroll', this.onPlanetScroll);
   }
 
-  private onWheel = (event: WheelEvent): void => {
-    event.preventDefault();
+  private onPlanetScroll = (event: Event): void => {
+    const customEvent = event as CustomEvent<{ delta: number; force?: number }>;
+    const delta = customEvent.detail?.delta ?? 0;
 
-    const direction = event.deltaY > 0 ? 1 : -1;
-    this.rotationBoost += direction * 0.006;
-    this.rotationBoost = THREE.MathUtils.clamp(this.rotationBoost, -0.045, 0.045);
+    const direction = delta > 0 ? 1 : -1;
+    const strength = Math.min(Math.abs(delta) / 900, 1);
+
+    this.rotationBoost += direction * (0.018 + strength * 0.022);
+    this.rotationBoost = THREE.MathUtils.clamp(this.rotationBoost, -0.08, 0.08);
   };
 
-  // MOUSE ROTATION
   private addMouseRotation(): void {
     this.renderer.domElement.addEventListener('pointerdown', this.onPointerDown);
     window.addEventListener('pointermove', this.onPointerMove);
@@ -233,7 +234,9 @@ export class SceneComponent implements AfterViewInit, OnDestroy {
   };
 
   private onPointerMove = (event: PointerEvent): void => {
-    if (!this.isDragging || !this.planetModel) return;
+    if (!this.isDragging || !this.planetModel) {
+      return;
+    }
 
     const deltaX = event.clientX - this.lastPointerX;
     this.lastPointerX = event.clientX;
@@ -255,7 +258,9 @@ export class SceneComponent implements AfterViewInit, OnDestroy {
     const width = host.clientWidth || window.innerWidth;
     const height = host.clientHeight || window.innerHeight;
 
-    if (!width || !height) return;
+    if (!width || !height) {
+      return;
+    }
 
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
