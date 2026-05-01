@@ -19,10 +19,12 @@ export class MainComponent implements OnInit {
   private isWheelLocked = false;
   private pendingSectionDirection: 1 | -1 | 0 = 0;
 
+  private readonly SCROLL_THRESHOLD = 10;
+  private readonly WHEEL_LOCK_MS = 1050;
+  private readonly MIN_WHEEL_DELTA = 18;
+
   public isScrolled = false;
   public emailUsGroup!: FormGroup;
-
-  private readonly SCROLL_THRESHOLD = 10;
 
   constructor(private _fb: FormBuilder, private toast: ToastService) {}
 
@@ -67,14 +69,14 @@ export class MainComponent implements OnInit {
     event.stopPropagation();
 
     const delta = event.deltaY;
+
+    if (Math.abs(delta) < this.MIN_WHEEL_DELTA) {
+      return;
+    }
+
+    this.rotatePlanet(delta);
+
     const direction: 1 | -1 = delta > 0 ? 1 : -1;
-
-    window.dispatchEvent(
-      new CustomEvent('planet-scroll', {
-        detail: { delta },
-      }),
-    );
-
     const sections = Array.from(container.querySelectorAll<HTMLElement>('.it-section'));
     const activeIndex = this.getActiveSectionIndex(container, sections);
     const activeSection = sections[activeIndex];
@@ -105,6 +107,8 @@ export class MainComponent implements OnInit {
     this.pendingSectionDirection = 0;
     this.isWheelLocked = true;
 
+    this.rotatePlanet(delta * 2);
+
     container.scrollTo({
       top: sections[nextIndex].offsetTop,
       behavior: 'smooth',
@@ -112,7 +116,7 @@ export class MainComponent implements OnInit {
 
     setTimeout(() => {
       this.isWheelLocked = false;
-    }, 750);
+    }, this.WHEEL_LOCK_MS);
   }
 
   public onContentScroll(container: HTMLElement): void {
@@ -132,6 +136,14 @@ export class MainComponent implements OnInit {
       top: section.offsetTop,
       behavior: 'smooth',
     });
+  }
+
+  private rotatePlanet(delta: number): void {
+    window.dispatchEvent(
+      new CustomEvent('planet-scroll', {
+        detail: { delta },
+      }),
+    );
   }
 
   private getActiveSectionIndex(container: HTMLElement, sections: HTMLElement[]): number {
