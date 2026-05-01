@@ -262,6 +262,7 @@ export class SceneComponent implements AfterViewInit, OnDestroy {
       return;
     }
 
+    
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
 
