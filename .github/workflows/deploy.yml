@@ -17,15 +17,28 @@ jobs:
           node-version: 20
 
       - run: npm ci
+
       - run: npm run build
 
-      - uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftp
-          port: 21
-          local-dir: ./dist/ionita-tech/browser/
-          server-dir: public_html/
-          dangerous-clean-slate: false
+      - name: Check build output
+        run: |
+          pwd
+          ls -la
+          ls -la dist
+          ls -la dist/ionita-tech
+          ls -la dist/ionita-tech/browser
+
+      - name: Install lftp
+        run: sudo apt-get update && sudo apt-get install -y lftp
+
+      - name: Deploy with FTP
+        run: |
+          lftp -u "${{ secrets.FTP_USERNAME }}","${{ secrets.FTP_PASSWORD }}" ${{ secrets.FTP_HOST }} <<EOF
+          set ftp:ssl-allow no
+          set net:timeout 30
+          set net:max-retries 2
+          pwd
+          ls
+          mirror -R --delete --verbose ./dist/ionita-tech/browser/ ./public_html/
+          bye
+          EOF
