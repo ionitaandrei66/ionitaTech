@@ -30,20 +30,14 @@ jobs:
 
       - name: Deploy with FTP
         run: |
-          lftp -u "${{ secrets.FTP_USERNAME }}","${{ secrets.FTP_PASSWORD }}" "${{ secrets.FTP_HOST }}" <<EOF
+          lftp -d -u "${{ secrets.FTP_USERNAME }}","${{ secrets.FTP_PASSWORD }}" "${{ secrets.FTP_HOST }}" <<EOF
           set ftp:ssl-allow no
-          set net:timeout 30
-          set net:max-retries 2
+          set ftp:passive-mode on
+          set net:timeout 60
+          set net:max-retries 3
+          set net:reconnect-interval-base 5
 
-          echo "REMOTE ROOT"
-          pwd
-          ls
-
-          echo "UPLOAD TO PUBLIC_HTML"
-          mirror -R --delete --verbose ./dist/ionita-tech/browser/ /public_html/
-
-          echo "PUBLIC_HTML AFTER"
-          ls /public_html
+          mirror -R --delete --verbose ./dist/ionita-tech/browser/ public_html/
 
           bye
           EOF
