@@ -86,10 +86,18 @@ export class MainComponent implements OnInit, AfterViewInit {
   }
 
   public onPageTouchStart(event: TouchEvent): void {
+    if (this.isEventInsidePanel(event)) {
+      return;
+    }
+
     this.lastPageTouchY = event.touches[0]?.clientY ?? 0;
   }
 
   public onPageTouchMove(event: TouchEvent, container: HTMLElement): void {
+    if (this.isEventInsidePanel(event)) {
+      return;
+    }
+
     const currentY = event.touches[0]?.clientY ?? 0;
     const delta = this.lastPageTouchY - currentY;
 
@@ -114,6 +122,7 @@ export class MainComponent implements OnInit, AfterViewInit {
   }
 
   public onPanelTouchStart(event: TouchEvent): void {
+    event.preventDefault();
     event.stopPropagation();
 
     this.lastPanelTouchY = event.touches[0]?.clientY ?? 0;
@@ -207,6 +216,10 @@ export class MainComponent implements OnInit, AfterViewInit {
     });
 
     return activeIndex;
+  }
+
+  private isEventInsidePanel(event: Event): boolean {
+    return !!(event.target as HTMLElement | null)?.closest('.it-section__panel');
   }
 
   public sendEmail(): void {
