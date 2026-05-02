@@ -18,10 +18,12 @@ export class MainComponent implements OnInit {
   private requestNumber = 5;
   private isWheelLocked = false;
   private pendingSectionDirection: 1 | -1 | 0 = 0;
+  private lastTouchY = 0;
 
   private readonly SCROLL_THRESHOLD = 10;
   private readonly WHEEL_LOCK_MS = 1050;
   private readonly MIN_WHEEL_DELTA = 18;
+  private readonly MIN_TOUCH_DELTA = 6;
 
   public isScrolled = false;
   public emailUsGroup!: FormGroup;
@@ -68,9 +70,50 @@ export class MainComponent implements OnInit {
     event.preventDefault();
     event.stopPropagation();
 
-    const delta = event.deltaY;
+    this.handleScrollDelta(event.deltaY, container, this.MIN_WHEEL_DELTA);
+  }
 
-    if (Math.abs(delta) < this.MIN_WHEEL_DELTA) {
+  public onTouchStart(event: TouchEvent): void {
+    this.lastTouchY = event.touches[0]?.clientY ?? 0;
+  }
+
+  public onTouchMove(event: TouchEvent, container: HTMLElement): void {
+    const currentY = event.touches[0]?.clientY ?? 0;
+    const delta = this.lastTouchY - currentY;
+
+    if (Math.abs(delta) < this.MIN_TOUCH_DELTA) {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    this.lastTouchY = currentY;
+    this.handleScrollDelta(delta * 2.4, container, this.MIN_TOUCH_DELTA);
+  }
+
+  public onContentScroll(container: HTMLElement): void {
+    this.isScrolled = container.scrollTop > this.SCROLL_THRESHOLD;
+  }
+
+  public scrollToSection(section: HTMLElement): void {
+    const container = document.querySelector<HTMLElement>('.it-scroll-content');
+
+    if (!container) {
+      return;
+    }
+
+    this.pendingSectionDirection = 0;
+    this.rotatePlanet(900);
+
+    container.scrollTo({
+      top: section.offsetTop,
+      behavior: 'smooth',
+    });
+  }
+
+  private handleScrollDelta(delta: number, container: HTMLElement, minDelta: number): void {
+    if (Math.abs(delta) < minDelta) {
       return;
     }
 
@@ -118,26 +161,6 @@ export class MainComponent implements OnInit {
     setTimeout(() => {
       this.isWheelLocked = false;
     }, this.WHEEL_LOCK_MS);
-  }
-
-  public onContentScroll(container: HTMLElement): void {
-    this.isScrolled = container.scrollTop > this.SCROLL_THRESHOLD;
-  }
-
-  public scrollToSection(section: HTMLElement): void {
-    const container = document.querySelector<HTMLElement>('.it-scroll-content');
-
-    if (!container) {
-      return;
-    }
-
-    this.pendingSectionDirection = 0;
-    this.rotatePlanet(900);
-
-    container.scrollTo({
-      top: section.offsetTop,
-      behavior: 'smooth',
-    });
   }
 
   private rotatePlanet(delta: number): void {

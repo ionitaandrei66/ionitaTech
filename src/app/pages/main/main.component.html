@@ -22,6 +22,8 @@
     #scrollContent
     (scroll)="onContentScroll(scrollContent)"
     (wheel)="onContentWheel($event, scrollContent)"
+    (touchstart)="onTouchStart($event)"
+    (touchmove)="onTouchMove($event, scrollContent)"
   >
     <section class="it-section it-hero" #homeSection>
       <div class="it-section__panel it-hero__panel">
