@@ -17,16 +17,7 @@ jobs:
           node-version: 20
 
       - run: npm ci
-
       - run: npm run build
-
-      - name: Check build output
-        run: |
-          pwd
-          ls -la
-          ls -la dist
-          ls -la dist/ionita-tech
-          ls -la dist/ionita-tech/browser
 
       - name: Install lftp
         run: sudo apt-get update && sudo apt-get install -y lftp
@@ -37,10 +28,18 @@ jobs:
           set ftp:ssl-allow no
           set net:timeout 30
           set net:max-retries 2
+
+          echo "REMOTE ROOT:"
           pwd
           ls
-          cd public_html
-          pwd
-          mirror -R --delete --verbose ./dist/ionita-tech/browser/ .
+
+          echo "PUBLIC_HTML BEFORE:"
+          ls public_html
+
+          mirror -R --delete --verbose ./dist/ionita-tech/browser/ /public_html/
+
+          echo "PUBLIC_HTML AFTER:"
+          ls /public_html
+
           bye
           EOF
