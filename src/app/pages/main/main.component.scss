@@ -126,13 +126,14 @@
 }
 
 .it-section__panel {
-  width: min(760px, 52vw);
-  max-height: calc(100vh - 9rem);
+  width: min(680px, 46vw);
+  max-height: 60vh;
   overflow-y: auto;
   overflow-x: hidden;
   overscroll-behavior: contain;
+  touch-action: none;
   scrollbar-width: none;
-  padding: clamp(1.5rem, 3vw, 3rem);
+  padding: clamp(1.25rem, 2.4vw, 2.4rem);
   border-radius: 34px;
   background:
     radial-gradient(circle at top left, rgba(61, 165, 255, 0.18), transparent 38%),
@@ -422,13 +423,15 @@ textarea::placeholder {
   .it-section__panel {
     width: 100%;
     max-width: 100%;
-    max-height: calc(100dvh - 6.5rem);
+    max-height: 60dvh;
     overflow-y: auto;
     overflow-x: hidden;
     margin: 0;
-    padding: 1.25rem;
-    border-radius: 26px;
+    padding: 1.1rem;
+    border-radius: 24px;
     scrollbar-width: none;
+    touch-action: none;
+    overscroll-behavior: contain;
   }
 
   .it-section__panel::-webkit-scrollbar {

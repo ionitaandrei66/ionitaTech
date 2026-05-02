@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import emailjs from '@emailjs/browser';
@@ -14,11 +14,12 @@ import { SceneComponent } from '../components/scene/scene.component';
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss',
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit, AfterViewInit {
   private requestNumber = 5;
   private isWheelLocked = false;
-  private pendingSectionDirection: 1 | -1 | 0 = 0;
-  private lastTouchY = 0;
+
+  private lastPageTouchY = 0;
+  private lastPanelTouchY = 0;
 
   private readonly SCROLL_THRESHOLD = 10;
   private readonly WHEEL_LOCK_MS = 1050;
@@ -66,20 +67,31 @@ export class MainComponent implements OnInit {
     });
   }
 
+  public ngAfterViewInit(): void {
+    setTimeout(() => {
+      document.querySelectorAll<HTMLElement>('.it-section__panel').forEach((panel) => {
+        panel.scrollTop = 0;
+      });
+
+      const container = document.querySelector<HTMLElement>('.it-scroll-content');
+      container?.scrollTo({ top: 0, behavior: 'auto' });
+    });
+  }
+
   public onContentWheel(event: WheelEvent, container: HTMLElement): void {
     event.preventDefault();
     event.stopPropagation();
 
-    this.handleScrollDelta(event.deltaY, container, this.MIN_WHEEL_DELTA);
+    this.handleSectionScroll(event.deltaY, container, this.MIN_WHEEL_DELTA);
   }
 
-  public onTouchStart(event: TouchEvent): void {
-    this.lastTouchY = event.touches[0]?.clientY ?? 0;
+  public onPageTouchStart(event: TouchEvent): void {
+    this.lastPageTouchY = event.touches[0]?.clientY ?? 0;
   }
 
-  public onTouchMove(event: TouchEvent, container: HTMLElement): void {
+  public onPageTouchMove(event: TouchEvent, container: HTMLElement): void {
     const currentY = event.touches[0]?.clientY ?? 0;
-    const delta = this.lastTouchY - currentY;
+    const delta = this.lastPageTouchY - currentY;
 
     if (Math.abs(delta) < this.MIN_TOUCH_DELTA) {
       return;
@@ -88,8 +100,35 @@ export class MainComponent implements OnInit {
     event.preventDefault();
     event.stopPropagation();
 
-    this.lastTouchY = currentY;
-    this.handleScrollDelta(delta * 2.4, container, this.MIN_TOUCH_DELTA);
+    this.lastPageTouchY = currentY;
+    this.handleSectionScroll(delta * 2.4, container, this.MIN_TOUCH_DELTA);
+  }
+
+  public onPanelWheel(event: WheelEvent): void {
+    const panel = event.currentTarget as HTMLElement;
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    panel.scrollTop += event.deltaY;
+  }
+
+  public onPanelTouchStart(event: TouchEvent): void {
+    event.stopPropagation();
+
+    this.lastPanelTouchY = event.touches[0]?.clientY ?? 0;
+  }
+
+  public onPanelTouchMove(event: TouchEvent): void {
+    const panel = event.currentTarget as HTMLElement;
+    const currentY = event.touches[0]?.clientY ?? 0;
+    const delta = this.lastPanelTouchY - currentY;
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    this.lastPanelTouchY = currentY;
+    panel.scrollTop += delta;
   }
 
   public onContentScroll(container: HTMLElement): void {
@@ -103,7 +142,6 @@ export class MainComponent implements OnInit {
       return;
     }
 
-    this.pendingSectionDirection = 0;
     this.rotatePlanet(900);
 
     container.scrollTo({
@@ -112,8 +150,8 @@ export class MainComponent implements OnInit {
     });
   }
 
-  private handleScrollDelta(delta: number, container: HTMLElement, minDelta: number): void {
-    if (Math.abs(delta) < minDelta) {
+  private handleSectionScroll(delta: number, container: HTMLElement, minDelta: number): void {
+    if (Math.abs(delta) < minDelta || this.isWheelLocked) {
       return;
     }
 
@@ -123,32 +161,12 @@ export class MainComponent implements OnInit {
 
     const sections = Array.from(container.querySelectorAll<HTMLElement>('.it-section'));
     const activeIndex = this.getActiveSectionIndex(container, sections);
-    const activeSection = sections[activeIndex];
-    const activePanel = activeSection?.querySelector<HTMLElement>('.it-section__panel');
-
-    if (activePanel && this.scrollPanelIfPossible(activePanel, delta)) {
-      this.pendingSectionDirection = 0;
-      return;
-    }
-
-    if (activePanel && this.panelHasScroll(activePanel)) {
-      if (this.pendingSectionDirection !== direction) {
-        this.pendingSectionDirection = direction;
-        return;
-      }
-    }
-
-    if (this.isWheelLocked) {
-      return;
-    }
-
     const nextIndex = Math.max(0, Math.min(sections.length - 1, activeIndex + direction));
 
     if (nextIndex === activeIndex) {
       return;
     }
 
-    this.pendingSectionDirection = 0;
     this.isWheelLocked = true;
 
     this.rotatePlanet(direction * 900);
@@ -189,36 +207,6 @@ export class MainComponent implements OnInit {
     });
 
     return activeIndex;
-  }
-
-  private panelHasScroll(panel: HTMLElement): boolean {
-    return panel.scrollHeight > panel.clientHeight + 1;
-  }
-
-  private scrollPanelIfPossible(panel: HTMLElement, delta: number): boolean {
-    const maxScrollTop = panel.scrollHeight - panel.clientHeight;
-
-    if (maxScrollTop <= 1) {
-      return false;
-    }
-
-    const isDown = delta > 0;
-    const isUp = delta < 0;
-
-    const isAtTop = panel.scrollTop <= 0;
-    const isAtBottom = panel.scrollTop >= maxScrollTop - 1;
-
-    if (isDown && !isAtBottom) {
-      panel.scrollTop = Math.min(maxScrollTop, panel.scrollTop + Math.abs(delta));
-      return true;
-    }
-
-    if (isUp && !isAtTop) {
-      panel.scrollTop = Math.max(0, panel.scrollTop - Math.abs(delta));
-      return true;
-    }
-
-    return false;
   }
 
   public sendEmail(): void {

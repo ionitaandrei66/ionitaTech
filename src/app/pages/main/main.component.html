@@ -22,11 +22,16 @@
     #scrollContent
     (scroll)="onContentScroll(scrollContent)"
     (wheel)="onContentWheel($event, scrollContent)"
-    (touchstart)="onTouchStart($event)"
-    (touchmove)="onTouchMove($event, scrollContent)"
+    (touchstart)="onPageTouchStart($event)"
+    (touchmove)="onPageTouchMove($event, scrollContent)"
   >
     <section class="it-section it-hero" #homeSection>
-      <div class="it-section__panel it-hero__panel">
+      <div
+        class="it-section__panel it-hero__panel"
+        (wheel)="onPanelWheel($event)"
+        (touchstart)="onPanelTouchStart($event)"
+        (touchmove)="onPanelTouchMove($event)"
+      >
         <span class="it-section__eyebrow">IONITA TECH</span>
 
         <h1>Shaping the Future of Digital Solutions</h1>
@@ -49,7 +54,12 @@
     </section>
 
     <section class="it-section it-about" #aboutUsSection>
-      <div class="it-section__panel">
+      <div
+        class="it-section__panel"
+        (wheel)="onPanelWheel($event)"
+        (touchstart)="onPanelTouchStart($event)"
+        (touchmove)="onPanelTouchMove($event)"
+      >
         <span class="it-section__eyebrow">ABOUT US</span>
 
         <h2>Building technology that moves business forward</h2>
@@ -105,7 +115,12 @@
     </section>
 
     <section class="it-section it-services" #servicesSection>
-      <div class="it-section__panel">
+      <div
+        class="it-section__panel"
+        (wheel)="onPanelWheel($event)"
+        (touchstart)="onPanelTouchStart($event)"
+        (touchmove)="onPanelTouchMove($event)"
+      >
         <span class="it-section__eyebrow">SERVICES</span>
 
         <h2>Services built for growth</h2>
@@ -144,7 +159,12 @@
     </section>
 
     <section class="it-section it-contact" #contactSection>
-      <div class="it-section__panel it-contact__panel">
+      <div
+        class="it-section__panel it-contact__panel"
+        (wheel)="onPanelWheel($event)"
+        (touchstart)="onPanelTouchStart($event)"
+        (touchmove)="onPanelTouchMove($event)"
+      >
         <span class="it-section__eyebrow">CONTACT US</span>
 
         <h2>Reach Out to Us</h2>
@@ -195,7 +215,12 @@
     </section>
 
     <footer class="it-section it-footer" #footerSection>
-      <div class="it-section__panel it-footer__panel">
+      <div
+        class="it-section__panel it-footer__panel"
+        (wheel)="onPanelWheel($event)"
+        (touchstart)="onPanelTouchStart($event)"
+        (touchmove)="onPanelTouchMove($event)"
+      >
         <span class="it-section__eyebrow">IONITA TECH</span>
 
         <h2>Let’s build something amazing.</h2>
