@@ -39,6 +39,8 @@ jobs:
           set net:max-retries 2
           pwd
           ls
-          mirror -R --delete --verbose ./dist/ionita-tech/browser/ public_html/
+          cd public_html
+          pwd
+          mirror -R --delete --verbose ./dist/ionita-tech/browser/ .
           bye
           EOF
