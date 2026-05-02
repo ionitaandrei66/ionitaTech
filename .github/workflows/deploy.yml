@@ -29,17 +29,10 @@ jobs:
           set net:timeout 30
           set net:max-retries 2
 
-          echo "REMOTE ROOT:"
-          pwd
-          ls
+          mkdir -p public_html
+          cd public_html
 
-          echo "PUBLIC_HTML BEFORE:"
-          ls public_html
-
-          mirror -R --delete --verbose ./dist/ionita-tech/browser/ /public_html/
-
-          echo "PUBLIC_HTML AFTER:"
-          ls /public_html
+          mirror -R --verbose ./dist/ionita-tech/browser/ .
 
           bye
           EOF
