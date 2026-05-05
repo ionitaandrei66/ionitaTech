@@ -122,7 +122,6 @@ export class MainComponent implements OnInit, AfterViewInit {
   }
 
   public onPanelTouchStart(event: TouchEvent): void {
-    event.preventDefault();
     event.stopPropagation();
 
     this.lastPanelTouchY = event.touches[0]?.clientY ?? 0;
@@ -132,6 +131,10 @@ export class MainComponent implements OnInit, AfterViewInit {
     const panel = event.currentTarget as HTMLElement;
     const currentY = event.touches[0]?.clientY ?? 0;
     const delta = this.lastPanelTouchY - currentY;
+
+    if (Math.abs(delta) < this.MIN_TOUCH_DELTA) {
+      return;
+    }
 
     event.preventDefault();
     event.stopPropagation();
