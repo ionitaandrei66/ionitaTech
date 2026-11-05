@@ -1,10 +1,16 @@
 @if (isVisible()) {
-  <div class="it-gate" role="dialog" aria-modal="true" aria-labelledby="it-gate-title">
+  <dialog
+    #dialog
+    class="it-gate"
+    aria-labelledby="it-gate-title"
+    aria-describedby="it-gate-points"
+    (cancel)="preventClosing($event)"
+  >
     <div class="it-gate__card">
-      <span class="it-gate__eyebrow">BEFORE YOU CONTINUE</span>
+      <p class="it-gate__eyebrow" aria-hidden="true">BEFORE YOU CONTINUE</p>
       <h2 id="it-gate-title" class="it-gate__title">How this website uses your data</h2>
 
-      <ul class="it-gate__points">
+      <ul id="it-gate-points" class="it-gate__points">
         @for (point of points; track $index) {
           <li>{{ point }}</li>
         }
@@ -21,7 +27,7 @@
       }
 
       <div class="it-gate__actions">
-        <button class="it-gate__button it-gate__button--primary" type="button" (click)="accept()">
+        <button class="it-gate__button it-gate__button--primary" type="button" autofocus (click)="accept()">
           I accept
         </button>
         <button class="it-gate__button it-gate__button--ghost" type="button" (click)="decline()">
@@ -29,5 +35,5 @@
         </button>
       </div>
     </div>
-  </div>
+  </dialog>
 }

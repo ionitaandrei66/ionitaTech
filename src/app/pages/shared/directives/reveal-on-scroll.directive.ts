@@ -1,4 +1,5 @@
-import { Directive, ElementRef, OnDestroy, OnInit, inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Directive, ElementRef, OnDestroy, OnInit, PLATFORM_ID, inject } from '@angular/core';
 
 @Directive({
   selector: '[appRevealOnScroll]',
@@ -8,9 +9,14 @@ export class RevealOnScrollDirective implements OnInit, OnDestroy {
   private static readonly VISIBLE_CLASS = 'it-reveal--visible';
 
   private readonly element: HTMLElement = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private observer?: IntersectionObserver;
 
   public ngOnInit(): void {
+    if (!this.isBrowser) {
+      return;
+    }
+
     if (typeof IntersectionObserver === 'undefined') {
       this.reveal();
       return;

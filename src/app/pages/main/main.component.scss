@@ -10,9 +10,15 @@ $text-muted: rgba(232, 238, 255, 0.68);
   color: #fff;
 }
 
-.it-content {
+.it-content,
+.it-section--footer {
   position: relative;
   z-index: 2;
+}
+
+.it-content,
+.it-section {
+  outline: none;
 }
 
 .it-section {
@@ -61,6 +67,7 @@ $text-muted: rgba(232, 238, 255, 0.68);
 }
 
 .it-panel__eyebrow {
+  margin-top: 0;
   display: inline-flex;
   align-items: center;
   gap: $spacing-s;
@@ -119,6 +126,10 @@ p {
 }
 
 .it-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
   border: 0;
   border-radius: 999px;
   padding: 0.9rem 1.3rem;
@@ -144,7 +155,9 @@ p {
 .it-services-grid {
   display: grid;
   gap: $spacing-s;
-  margin-top: $spacing-m;
+  margin: $spacing-m 0 0;
+  padding: 0;
+  list-style: none;
 }
 
 .it-services-grid {

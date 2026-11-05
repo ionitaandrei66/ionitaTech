@@ -1,18 +1,23 @@
 <header class="it-header" [class.it-header--scrolled]="isScrolled() || isMenuOpen()">
-  <button class="it-header__logo" type="button" (click)="navigateTo('home')">
+  <a class="it-header__logo" href="#home" aria-label="Ionita Tech, back to top" (click)="navigateTo($event, 'home')">
     Ionita<span>Tech.</span>
-  </button>
+  </a>
 
   <nav class="it-header__nav" aria-label="Main">
-    @for (item of navItems(); track item.target) {
-      <button type="button" (click)="navigateTo(item.target)">{{ item.label }}</button>
-    }
+    <ul class="it-header__nav-list">
+      @for (item of navItems(); track item.target) {
+        <li>
+          <a [href]="'#' + item.target" (click)="navigateTo($event, item.target)">{{ item.label }}</a>
+        </li>
+      }
+    </ul>
   </nav>
 
   <div class="it-header__actions">
-    <button class="it-header__cta" type="button" (click)="navigateTo('contact')">Start Project</button>
+    <a class="it-header__cta" href="#contact" (click)="navigateTo($event, 'contact')">Start Project</a>
 
     <button
+      #menuToggle
       class="it-header__menu-toggle"
       [class.it-header__menu-toggle--open]="isMenuOpen()"
       type="button"
@@ -27,14 +32,28 @@
 </header>
 
 @if (isMenuOpen()) {
-  <div class="it-mobile-menu__backdrop" (click)="closeMenu()"></div>
+  <div class="it-mobile-menu__backdrop" aria-hidden="true" (click)="closeMenu()"></div>
 
   <nav id="it-mobile-menu" class="it-mobile-menu" aria-label="Mobile">
-    @for (item of navItems(); track item.target) {
-      <button class="it-mobile-menu__item" type="button" (click)="navigateTo(item.target)">{{ item.label }}</button>
-    }
-    <button class="it-mobile-menu__item" type="button" (click)="navigateTo('contact')">Contact</button>
+    <ul class="it-mobile-menu__list">
+      @for (item of navItems(); track item.target; let first = $first) {
+        <li>
+          @if (first) {
+            <a #firstMenuLink class="it-mobile-menu__item" [href]="'#' + item.target" (click)="navigateTo($event, item.target)">
+              {{ item.label }}
+            </a>
+          } @else {
+            <a class="it-mobile-menu__item" [href]="'#' + item.target" (click)="navigateTo($event, item.target)">
+              {{ item.label }}
+            </a>
+          }
+        </li>
+      }
+      <li>
+        <a class="it-mobile-menu__item" href="#contact" (click)="navigateTo($event, 'contact')">Contact</a>
+      </li>
+    </ul>
 
-    <button class="it-mobile-menu__cta" type="button" (click)="navigateTo('contact')">Start Project</button>
+    <a class="it-mobile-menu__cta" href="#contact" (click)="navigateTo($event, 'contact')">Start Project</a>
   </nav>
 }

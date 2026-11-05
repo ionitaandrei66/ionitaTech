@@ -4,85 +4,89 @@
 
 <app-site-header [navItems]="navItems" (navigate)="navigateTo($event)" />
 
-<main class="it-content">
-  <section id="home" class="it-section">
+<main id="main-content" class="it-content" tabindex="-1">
+  <section id="home" class="it-section" tabindex="-1" aria-labelledby="home-title">
     <div class="it-panel it-panel--hero" appRevealOnScroll>
-      <span class="it-panel__eyebrow">IONITA TECH</span>
-      <h1>Shaping the Future of Digital Solutions</h1>
+      <p class="it-panel__eyebrow" aria-hidden="true">IONITA TECH</p>
+      <h1 id="home-title">Shaping the Future of Digital Solutions</h1>
       <p class="it-panel__text">
         We build scalable, secure and modern software solutions that help businesses grow in a digital first world.
       </p>
 
       <div class="it-panel__actions">
-        <button class="it-button it-button--primary" type="button" (click)="navigateTo('contact')">Let’s talk</button>
-        <button class="it-button it-button--ghost" type="button" (click)="navigateTo('services')">View services</button>
+        <a class="it-button it-button--primary" href="#contact" (click)="followSectionLink($event, 'contact')">
+          Let’s talk
+        </a>
+        <a class="it-button it-button--ghost" href="#services" (click)="followSectionLink($event, 'services')">
+          View services
+        </a>
       </div>
     </div>
   </section>
 
-  <section id="about" class="it-section">
+  <section id="about" class="it-section" tabindex="-1" aria-labelledby="about-title">
     <div class="it-panel" appRevealOnScroll>
-      <span class="it-panel__eyebrow">ABOUT US</span>
-      <h2>Building technology that moves business forward</h2>
+      <p class="it-panel__eyebrow" aria-hidden="true">ABOUT US</p>
+      <h2 id="about-title">Building technology that moves business forward</h2>
       <p class="it-panel__text">
         At Ionita Tech we are committed to pushing the boundaries of technology to create innovative solutions that
         empower businesses and individuals alike.
       </p>
 
-      <div class="it-info-list">
+      <ul class="it-info-list">
         @for (card of aboutCards; track card.title) {
-          <article class="it-info-card">
+          <li class="it-info-card">
             <span class="it-card-icon" aria-hidden="true">{{ card.icon }}</span>
             <div>
               <h3>{{ card.title }}</h3>
               <p>{{ card.description }}</p>
             </div>
-          </article>
+          </li>
         }
-      </div>
+      </ul>
     </div>
   </section>
 
-  <section id="services" class="it-section">
+  <section id="services" class="it-section" tabindex="-1" aria-labelledby="services-title">
     <div class="it-panel" appRevealOnScroll>
-      <span class="it-panel__eyebrow">SERVICES</span>
-      <h2>Services built for growth</h2>
+      <p class="it-panel__eyebrow" aria-hidden="true">SERVICES</p>
+      <h2 id="services-title">Services built for growth</h2>
       <p class="it-panel__text">
         We offer a comprehensive range of technology services that help businesses build, scale and secure digital
         products with confidence.
       </p>
 
-      <div class="it-services-grid">
+      <ul class="it-services-grid">
         @for (card of serviceCards; track card.title) {
-          <article class="it-service-card">
+          <li class="it-service-card">
             <span class="it-card-icon" aria-hidden="true">{{ card.icon }}</span>
             <h3>{{ card.title }}</h3>
             <p>{{ card.description }}</p>
-          </article>
+          </li>
         }
-      </div>
+      </ul>
     </div>
   </section>
 
-  <section id="contact" class="it-section">
+  <section id="contact" class="it-section" tabindex="-1" aria-labelledby="contact-title">
     <div class="it-panel" appRevealOnScroll>
-      <span class="it-panel__eyebrow">CONTACT US</span>
-      <h2>Reach Out to Us</h2>
-      <app-contact-form />
+      <p class="it-panel__eyebrow" aria-hidden="true">CONTACT US</p>
+      <h2 id="contact-title">Reach Out to Us</h2>
+      <app-contact-form labelledBy="contact-title" />
     </div>
   </section>
-
-  <footer class="it-section it-section--footer">
-    <div class="it-panel it-panel--footer" appRevealOnScroll>
-      <span class="it-panel__eyebrow">IONITA TECH</span>
-      <h2>Let’s build something amazing.</h2>
-
-      <button class="it-button it-button--primary" type="button" (click)="navigateTo('contact')">Start Project</button>
-
-      <p class="it-footer__legal">
-        © {{ currentYear }} {{ company.legalName }}. All rights reserved.
-      </p>
-      <a class="it-footer__link" routerLink="/privacy">Privacy Policy &amp; Terms</a>
-    </div>
-  </footer>
 </main>
+
+<footer class="it-section it-section--footer">
+  <div class="it-panel it-panel--footer" appRevealOnScroll>
+    <p class="it-panel__eyebrow" aria-hidden="true">IONITA TECH</p>
+    <h2>Let’s build something amazing.</h2>
+
+    <a class="it-button it-button--primary" href="#contact" (click)="followSectionLink($event, 'contact')">
+      Start Project
+    </a>
+
+    <p class="it-footer__legal">© {{ currentYear }} {{ company.legalName }}. All rights reserved.</p>
+    <a class="it-footer__link" routerLink="/privacy">Privacy Policy &amp; Terms</a>
+  </div>
+</footer>

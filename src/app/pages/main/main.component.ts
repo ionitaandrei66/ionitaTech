@@ -25,7 +25,15 @@ export class MainComponent {
   protected readonly company = COMPANY_INFO;
   protected readonly currentYear = new Date().getFullYear();
 
+  protected followSectionLink(event: Event, sectionId: SectionId): void {
+    event.preventDefault();
+    this.navigateTo(sectionId);
+  }
+
   protected navigateTo(sectionId: SectionId): void {
-    this.document.getElementById(sectionId)?.scrollIntoView({ block: 'start' });
+    const section = this.document.getElementById(sectionId);
+
+    section?.scrollIntoView({ block: 'start' });
+    section?.focus({ preventScroll: true });
   }
 }

@@ -4,14 +4,27 @@
 .it-gate {
   position: fixed;
   inset: 0;
-  z-index: 100;
-  display: grid;
-  place-items: center;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
   padding: $spacing-m;
+  border: 0;
   overflow-y: auto;
+  color: inherit;
   background: rgba(2, 4, 10, 0.78);
   backdrop-filter: blur(14px);
   animation: itGateFade 260ms ease-out both;
+
+  &[open] {
+    display: grid;
+    place-items: center;
+  }
+
+  &::backdrop {
+    background: transparent;
+  }
 
   @include respond(mld) {
     padding: $spacing-s;
@@ -32,6 +45,7 @@
 }
 
 .it-gate__eyebrow {
+  margin: 0;
   color: #3da5ff;
   font-size: 0.72rem;
   font-weight: 900;

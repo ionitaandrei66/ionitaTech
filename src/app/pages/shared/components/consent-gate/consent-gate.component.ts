@@ -1,4 +1,15 @@
-import { ChangeDetectionStrategy, Component, computed, effect, inject, signal, DOCUMENT } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DOCUMENT,
+  ElementRef,
+  afterNextRender,
+  computed,
+  effect,
+  inject,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { filter, map } from 'rxjs';
@@ -21,6 +32,8 @@ export class ConsentGateComponent {
   private readonly router = inject(Router);
   private readonly document = inject(DOCUMENT);
 
+  private readonly dialog = viewChild<ElementRef<HTMLDialogElement>>('dialog');
+  private readonly isBrowserReady = signal(false);
   private readonly currentPath = toSignal(
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd),
@@ -32,12 +45,25 @@ export class ConsentGateComponent {
   protected readonly points = NOTICE_POINTS;
   protected readonly hasDeclined = signal(false);
   protected readonly isVisible = computed(
-    () => !this.consentService.accepted() && !ConsentGateComponent.UNGATED_PATHS.includes(this.currentPath()),
+    () =>
+      this.isBrowserReady() &&
+      !this.consentService.accepted() &&
+      !ConsentGateComponent.UNGATED_PATHS.includes(this.currentPath()),
   );
 
   public constructor() {
+    afterNextRender(() => this.isBrowserReady.set(true));
+
     effect(() => {
       this.document.documentElement.classList.toggle(ConsentGateComponent.SCROLL_LOCK_CLASS, this.isVisible());
+    });
+
+    effect(() => {
+      const dialog = this.dialog()?.nativeElement;
+
+      if (dialog && !dialog.open) {
+        dialog.showModal();
+      }
     });
   }
 
@@ -47,5 +73,9 @@ export class ConsentGateComponent {
 
   protected decline(): void {
     this.hasDeclined.set(true);
+  }
+
+  protected preventClosing(event: Event): void {
+    event.preventDefault();
   }
 }

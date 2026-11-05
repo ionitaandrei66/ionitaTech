@@ -33,18 +33,24 @@ $accent: #3da5ff;
 }
 
 .it-header__logo,
-.it-header__nav button,
-.it-header__cta {
-  border: 0;
+.it-header__nav a,
+.it-header__cta,
+.it-mobile-menu__item,
+.it-mobile-menu__cta {
   font: inherit;
   line-height: 1;
-  cursor: pointer;
+  text-decoration: none;
+}
+
+.it-header__nav-list,
+.it-mobile-menu__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .it-header__logo {
   justify-self: start;
-  padding: 0;
-  background: transparent;
   color: #fff;
   font-size: 1.3rem;
   font-weight: 900;
@@ -55,15 +61,20 @@ $accent: #3da5ff;
 }
 
 .it-header__nav {
-  display: flex;
-  gap: $spacing-xxs;
   padding: $spacing-xxs;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.045);
   border: 1px solid rgba(255, 255, 255, 0.08);
 
-  button {
+  .it-header__nav-list {
+    display: flex;
+    gap: $spacing-xxs;
+  }
+
+  a {
+    display: inline-block;
     min-width: 88px;
+    text-align: center;
     border-radius: 999px;
     padding: 0.6rem 0.9rem;
     background: transparent;
@@ -169,7 +180,7 @@ $accent: #3da5ff;
   right: 0;
   z-index: 19;
   display: grid;
-  gap: $spacing-xxs;
+  gap: $spacing-xs;
   padding: $spacing-s $spacing-m $spacing-m;
   background: rgba(2, 4, 10, 0.96);
   border-bottom: 1px solid rgba(104, 167, 255, 0.22);
@@ -182,17 +193,18 @@ $accent: #3da5ff;
   }
 }
 
+.it-mobile-menu__list {
+  display: grid;
+  gap: $spacing-xxs;
+}
+
 .it-mobile-menu__item {
+  display: block;
   padding: $spacing-s $spacing-xm;
-  border: 0;
   border-radius: 14px;
-  text-align: left;
   color: rgba(255, 255, 255, 0.82);
-  font: inherit;
   font-size: 1.05rem;
   font-weight: 700;
-  background: transparent;
-  cursor: pointer;
 
   &:hover,
   &:focus-visible {
@@ -202,15 +214,13 @@ $accent: #3da5ff;
 }
 
 .it-mobile-menu__cta {
-  margin-top: $spacing-xs;
+  display: block;
   padding: 0.95rem $spacing-xm;
-  border: 0;
   border-radius: 999px;
+  text-align: center;
   color: #fff;
-  font: inherit;
   font-weight: 800;
   background: linear-gradient(135deg, #168cff, #7c5cff);
-  cursor: pointer;
 }
 
 .it-mobile-menu__backdrop {

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, input, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -30,6 +30,8 @@ export class ContactFormComponent {
   private readonly destroyRef = inject(DestroyRef);
 
   private readonly renderedAt = Date.now();
+
+  public readonly labelledBy = input<string | null>(null);
 
   protected readonly limits = CONTACT_LIMITS;
   protected readonly emailJsPrivacyUrl = EMAILJS_PRIVACY_URL;

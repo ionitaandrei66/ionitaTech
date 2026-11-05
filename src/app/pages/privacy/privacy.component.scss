@@ -11,6 +11,7 @@
 }
 
 .it-legal {
+  outline: none;
   width: min(820px, 100%);
   margin: 0 auto;
   padding: $spacing-l $spacing-m $spacing-4xl;
@@ -40,6 +41,7 @@
 }
 
 .it-legal__eyebrow {
+  margin: 0;
   color: #3da5ff;
   font-size: 0.75rem;
   font-weight: 900;
