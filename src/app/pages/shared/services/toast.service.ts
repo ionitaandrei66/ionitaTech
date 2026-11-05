@@ -3,44 +3,52 @@ import { Injectable, signal } from '@angular/core';
 export type ToastType = 'success' | 'error' | 'info';
 
 export interface Toast {
-  id: string;
-  type: ToastType;
-  title?: string;
-  message: string;
-  durationMs: number;
+  readonly id: string;
+  readonly type: ToastType;
+  readonly title?: string;
+  readonly message: string;
+  readonly durationMs: number;
+}
+
+export interface ToastOptions {
+  readonly title?: string;
+  readonly durationMs?: number;
 }
 
 @Injectable({ providedIn: 'root' })
 export class ToastService {
-  private readonly _toasts = signal<Toast[]>([]);
+  private static readonly DEFAULT_DURATION_MS = 3500;
+  private static readonly MAX_VISIBLE = 5;
+
+  private readonly _toasts = signal<readonly Toast[]>([]);
   public readonly toasts = this._toasts.asReadonly();
 
-  success(message: string, opts?: { title?: string; durationMs?: number }) {
-    this.push({ type: 'success', message, ...opts });
+  public success(message: string, options?: ToastOptions): void {
+    this.push('success', message, options);
   }
 
-  error(message: string, opts?: { title?: string; durationMs?: number }) {
-    this.push({ type: 'error', message, ...opts });
+  public error(message: string, options?: ToastOptions): void {
+    this.push('error', message, options);
   }
 
-  info(message: string, opts?: { title?: string; durationMs?: number }) {
-    this.push({ type: 'info', message, ...opts });
+  public info(message: string, options?: ToastOptions): void {
+    this.push('info', message, options);
   }
 
-  remove(id: string) {
-    this._toasts.update((list) => list.filter((t) => t.id !== id));
+  public remove(id: string): void {
+    this._toasts.update((list) => list.filter((toast) => toast.id !== id));
   }
 
-  private push(input: { type: ToastType; message: string; title?: string; durationMs?: number }) {
+  private push(type: ToastType, message: string, options: ToastOptions = {}): void {
     const toast: Toast = {
-      id: crypto?.randomUUID?.() ?? String(Date.now() + Math.random()),
-      type: input.type,
-      title: input.title,
-      message: input.message,
-      durationMs: input.durationMs ?? 2500,
+      id: crypto.randomUUID(),
+      type,
+      title: options.title,
+      message,
+      durationMs: options.durationMs ?? ToastService.DEFAULT_DURATION_MS,
     };
 
-    this._toasts.update((list) => [toast, ...list].slice(0, 5));
+    this._toasts.update((list) => [toast, ...list].slice(0, ToastService.MAX_VISIBLE));
 
     window.setTimeout(() => this.remove(toast.id), toast.durationMs);
   }

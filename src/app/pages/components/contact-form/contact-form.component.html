@@ -1,0 +1,74 @@
+<form class="it-contact-form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+  <!-- Honeypot: hidden from people, bots fill it in and get silently dropped -->
+  <input
+    class="it-contact-form__trap"
+    formControlName="website"
+    tabindex="-1"
+    autocomplete="off"
+    aria-hidden="true"
+  />
+
+  <div class="it-field">
+    <label class="it-visually-hidden" for="contact-name">Your name</label>
+    <div class="it-field__control" [class.it-field__control--error]="isInvalid('name')">
+      <input
+        id="contact-name"
+        formControlName="name"
+        placeholder="Your Name"
+        autocomplete="name"
+        [maxlength]="limits.nameMaxLength"
+      />
+    </div>
+    @if (isInvalid('name')) {
+      <p class="it-field__error">Name is required.</p>
+    }
+  </div>
+
+  <div class="it-field">
+    <label class="it-visually-hidden" for="contact-email">Your email</label>
+    <div class="it-field__control" [class.it-field__control--error]="isInvalid('email')">
+      <input
+        id="contact-email"
+        type="email"
+        formControlName="email"
+        placeholder="Your Email"
+        autocomplete="email"
+        [maxlength]="limits.emailMaxLength"
+      />
+    </div>
+    @if (isInvalid('email')) {
+      <p class="it-field__error">Please enter a valid email address.</p>
+    }
+  </div>
+
+  <div class="it-field">
+    <label class="it-visually-hidden" for="contact-message">Your message</label>
+    <div class="it-field__control it-field__control--textarea" [class.it-field__control--error]="isInvalid('message')">
+      <textarea
+        id="contact-message"
+        formControlName="message"
+        placeholder="Type your message here"
+        [maxlength]="limits.messageMaxLength"
+      ></textarea>
+    </div>
+    @if (isInvalid('message')) {
+      <p class="it-field__error">Message is required.</p>
+    }
+  </div>
+
+  <div class="it-field">
+    <label class="it-consent-check" [class.it-consent-check--error]="isInvalid('privacyAccepted')">
+      <input type="checkbox" formControlName="privacyAccepted" />
+      <span>
+        I agree that my name, email and message are sent through
+        <a [href]="emailJsPrivacyUrl" target="_blank" rel="noopener noreferrer">EmailJS</a>, a third-party service,
+        so that Ionita Tech can answer this request, as described in the
+        <a routerLink="/privacy" target="_blank">Privacy Policy</a>.
+      </span>
+    </label>
+  </div>
+
+  <button type="submit" class="it-contact-form__submit" [disabled]="isSending()">
+    {{ isSending() ? 'Sending…' : 'Send message' }}
+  </button>
+</form>

@@ -1,35 +1,32 @@
-import {Component, OnInit} from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { Meta } from '@angular/platform-browser';
 import { RouterOutlet } from '@angular/router';
-import {MainComponent} from "./pages/main/main.component";
-import {ToastContainerComponent} from "./pages/shared/components/toast-notification/toast.component";
-import {Meta, Title} from "@angular/platform-browser";
+
+import { ConsentGateComponent } from './pages/shared/components/consent-gate/consent-gate.component';
+import { ToastContainerComponent } from './pages/shared/components/toast-notification/toast.component';
+
+const SITE_URL = 'https://ionitatech.com';
+const SITE_TITLE = 'Ionita Tech | Modern Software Services';
+const SITE_DESCRIPTION =
+  'Ionita Tech delivers scalable, secure, and modern software solutions — from consulting and custom development to cloud and cybersecurity.';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MainComponent, ToastContainerComponent],
+  imports: [RouterOutlet, ToastContainerComponent, ConsentGateComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
-  constructor(private meta: Meta, private titleService: Title) { }
+  private readonly meta = inject(Meta);
 
   public ngOnInit(): void {
     this.updateMetaTags();
   }
 
-  updateMetaTags(): void {
-    const baseUrl = 'https://ionitatech.com';
-
-    const title = 'Ionita Tech | Modern Software Services';
-    const description =
-      'Ionita Tech delivers scalable, secure, and modern software solutions — from consulting and custom development to cloud and cybersecurity.';
-
-    const ogImage = `${baseUrl}/background.png`;
-
-    this.titleService.setTitle(title);
-
-    this.meta.updateTag({ name: 'description', content: description });
+  private updateMetaTags(): void {
+    this.meta.updateTag({ name: 'description', content: SITE_DESCRIPTION });
     this.meta.updateTag({
       name: 'keywords',
       content:
@@ -38,14 +35,13 @@ export class AppComponent implements OnInit {
 
     this.meta.updateTag({ property: 'og:type', content: 'website' });
     this.meta.updateTag({ property: 'og:site_name', content: 'Ionita Tech' });
-    this.meta.updateTag({ property: 'og:title', content: title });
-    this.meta.updateTag({ property: 'og:description', content: description });
-    this.meta.updateTag({ property: 'og:url', content: baseUrl });
-    this.meta.updateTag({ property: 'og:image', content: ogImage });
+    this.meta.updateTag({ property: 'og:title', content: SITE_TITLE });
+    this.meta.updateTag({ property: 'og:description', content: SITE_DESCRIPTION });
+    this.meta.updateTag({ property: 'og:url', content: SITE_URL });
+    this.meta.updateTag({ property: 'og:image', content: `${SITE_URL}/background.png` });
     this.meta.updateTag({
       property: 'og:image:alt',
       content: 'Ionita Tech — Shaping the Future of Digital Solutions',
     });
   }
 }
-

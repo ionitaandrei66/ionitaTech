@@ -1,238 +1,98 @@
-<div class="it-page-shell">
-  <app-vending-viewer class="it-space-scene"></app-vending-viewer>
+<app-planet-scene />
 
-  <header class="it-header" [class.it-header--scrolled]="isScrolled">
-    <button class="it-header__logo" (click)="scrollToSection(homeSection)">
-      Ionita<span>Tech.</span>
-    </button>
+<header class="it-header" [class.it-header--scrolled]="isScrolled()">
+  <button class="it-header__logo" type="button" (click)="scrollTo('home')">
+    Ionita<span>Tech.</span>
+  </button>
 
-    <nav class="it-header__nav">
-      <button (click)="scrollToSection(homeSection)">Home</button>
-      <button (click)="scrollToSection(aboutUsSection)">About</button>
-      <button (click)="scrollToSection(servicesSection)">Services</button>
-    </nav>
+  <nav class="it-header__nav" aria-label="Main">
+    @for (item of navItems; track item.target) {
+      <button type="button" (click)="scrollTo(item.target)">{{ item.label }}</button>
+    }
+  </nav>
 
-    <button class="it-header__cta" (click)="scrollToSection(contactSection)">
-      Start Project
-    </button>
-  </header>
+  <button class="it-header__cta" type="button" (click)="scrollTo('contact')">Start Project</button>
+</header>
 
-  <main
-    class="it-scroll-content"
-    #scrollContent
-    (scroll)="onContentScroll(scrollContent)"
-    (wheel)="onContentWheel($event, scrollContent)"
-    (touchstart)="onPageTouchStart($event)"
-    (touchmove)="onPageTouchMove($event, scrollContent)"
-  >
-    <section class="it-section it-hero" #homeSection>
-      <div
-        class="it-section__panel it-hero__panel"
-        (wheel)="onPanelWheel($event)"
-        (touchstart)="onPanelTouchStart($event)"
-        (touchmove)="onPanelTouchMove($event)"
-      >
-        <span class="it-section__eyebrow">IONITA TECH</span>
+<main class="it-content">
+  <section id="home" class="it-section">
+    <div class="it-panel it-panel--hero" appRevealOnScroll>
+      <span class="it-panel__eyebrow">IONITA TECH</span>
+      <h1>Shaping the Future of Digital Solutions</h1>
+      <p class="it-panel__text">
+        We build scalable, secure and modern software solutions that help businesses grow in a digital first world.
+      </p>
 
-        <h1>Shaping the Future of Digital Solutions</h1>
-
-        <p class="it-section__text">
-          We build scalable secure and modern software solutions that help businesses
-          grow in a digital first world.
-        </p>
-
-        <div class="it-hero__actions">
-          <button class="it-button it-button--primary" (click)="scrollToSection(contactSection)">
-            Let’s talk
-          </button>
-
-          <button class="it-button it-button--ghost" (click)="scrollToSection(servicesSection)">
-            View services
-          </button>
-        </div>
+      <div class="it-panel__actions">
+        <button class="it-button it-button--primary" type="button" (click)="scrollTo('contact')">Let’s talk</button>
+        <button class="it-button it-button--ghost" type="button" (click)="scrollTo('services')">View services</button>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="it-section it-about" #aboutUsSection>
-      <div
-        class="it-section__panel"
-        (wheel)="onPanelWheel($event)"
-        (touchstart)="onPanelTouchStart($event)"
-        (touchmove)="onPanelTouchMove($event)"
-      >
-        <span class="it-section__eyebrow">ABOUT US</span>
+  <section id="about" class="it-section">
+    <div class="it-panel" appRevealOnScroll>
+      <span class="it-panel__eyebrow">ABOUT US</span>
+      <h2>Building technology that moves business forward</h2>
+      <p class="it-panel__text">
+        At Ionita Tech we are committed to pushing the boundaries of technology to create innovative solutions that
+        empower businesses and individuals alike.
+      </p>
 
-        <h2>Building technology that moves business forward</h2>
-
-        <p class="it-section__text">
-          At Ionita Tech we are committed to pushing the boundaries of technology to
-          create innovative solutions that empower businesses and individuals alike.
-        </p>
-
-        <div class="it-info-list">
+      <div class="it-info-list">
+        @for (card of aboutCards; track card.title) {
           <article class="it-info-card">
-            <span class="it-info-card__icon">◎</span>
+            <span class="it-card-icon" aria-hidden="true">{{ card.icon }}</span>
             <div>
-              <h3>Our Mission</h3>
-              <p>
-                To innovate and deliver cutting edge solutions that empower our clients
-                and create measurable business value.
-              </p>
+              <h3>{{ card.title }}</h3>
+              <p>{{ card.description }}</p>
             </div>
           </article>
-
-          <article class="it-info-card">
-            <span class="it-info-card__icon">◇</span>
-            <div>
-              <h3>Our Values</h3>
-              <p>
-                Integrity innovation and impact guide every decision from discovery to delivery.
-              </p>
-            </div>
-          </article>
-
-          <article class="it-info-card">
-            <span class="it-info-card__icon">&lt;/&gt;</span>
-            <div>
-              <h3>How We Work</h3>
-              <p>
-                We use short iterations clear communication and continuous feedback.
-              </p>
-            </div>
-          </article>
-
-          <article class="it-info-card">
-            <span class="it-info-card__icon">↗</span>
-            <div>
-              <h3>Our Services</h3>
-              <p>
-                From product discovery and UX design to scalable backend systems.
-              </p>
-            </div>
-          </article>
-        </div>
+        }
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="it-section it-services" #servicesSection>
-      <div
-        class="it-section__panel"
-        (wheel)="onPanelWheel($event)"
-        (touchstart)="onPanelTouchStart($event)"
-        (touchmove)="onPanelTouchMove($event)"
-      >
-        <span class="it-section__eyebrow">SERVICES</span>
+  <section id="services" class="it-section">
+    <div class="it-panel" appRevealOnScroll>
+      <span class="it-panel__eyebrow">SERVICES</span>
+      <h2>Services built for growth</h2>
+      <p class="it-panel__text">
+        We offer a comprehensive range of technology services that help businesses build, scale and secure digital
+        products with confidence.
+      </p>
 
-        <h2>Services built for growth</h2>
-
-        <p class="it-section__text">
-          We offer a comprehensive range of technology services that help businesses
-          build scale and secure digital products with confidence.
-        </p>
-
-        <div class="it-services-grid">
+      <div class="it-services-grid">
+        @for (card of serviceCards; track card.title) {
           <article class="it-service-card">
-            <span class="it-service-card__icon">☷</span>
-            <h3>Consulting</h3>
-            <p>Expert advice to optimize your technology strategy and operations.</p>
+            <span class="it-card-icon" aria-hidden="true">{{ card.icon }}</span>
+            <h3>{{ card.title }}</h3>
+            <p>{{ card.description }}</p>
           </article>
-
-          <article class="it-service-card">
-            <span class="it-service-card__icon">&lt;/&gt;</span>
-            <h3>Software</h3>
-            <p>Custom software solutions to drive innovation and efficiency.</p>
-          </article>
-
-          <article class="it-service-card">
-            <span class="it-service-card__icon">☁</span>
-            <h3>Cloud</h3>
-            <p>Efficient and scalable cloud solutions tailored to your business needs.</p>
-          </article>
-
-          <article class="it-service-card">
-            <span class="it-service-card__icon">◇</span>
-            <h3>Cybersecurity</h3>
-            <p>Robust security measures to protect your data and infrastructure.</p>
-          </article>
-        </div>
+        }
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="it-section it-contact" #contactSection>
-      <div
-        class="it-section__panel it-contact__panel"
-        (wheel)="onPanelWheel($event)"
-        (touchstart)="onPanelTouchStart($event)"
-        (touchmove)="onPanelTouchMove($event)"
-      >
-        <span class="it-section__eyebrow">CONTACT US</span>
+  <section id="contact" class="it-section">
+    <div class="it-panel" appRevealOnScroll>
+      <span class="it-panel__eyebrow">CONTACT US</span>
+      <h2>Reach Out to Us</h2>
+      <app-contact-form />
+    </div>
+  </section>
 
-        <h2>Reach Out to Us</h2>
+  <footer class="it-section it-section--footer">
+    <div class="it-panel it-panel--footer" appRevealOnScroll>
+      <span class="it-panel__eyebrow">IONITA TECH</span>
+      <h2>Let’s build something amazing.</h2>
 
-        <form class="it-contact__form" [formGroup]="emailUsGroup">
-          <input class="it-popLol" formControlName="popLol" />
+      <button class="it-button it-button--primary" type="button" (click)="scrollTo('contact')">Start Project</button>
 
-          <section class="it-field">
-            <div class="it-field__control" [class.it-field__control--error]="nameInvalid">
-              <input formControlName="name" placeholder="Your Name" />
-            </div>
-            @if (nameInvalid) {
-              <p>Name is required.</p>
-            }
-          </section>
-
-          <section class="it-field">
-            <div class="it-field__control" [class.it-field__control--error]="emailInvalid">
-              <input formControlName="email" placeholder="Your Email" />
-            </div>
-            @if (emailInvalid) {
-              <p>Email is required.</p>
-            }
-          </section>
-
-          <section class="it-field">
-            <div
-              class="it-field__control it-field__control--textarea"
-              [class.it-field__control--error]="messageInvalid"
-            >
-              <textarea formControlName="message" placeholder="Type your message here"></textarea>
-            </div>
-            @if (messageInvalid) {
-              <p>Message is required.</p>
-            }
-          </section>
-
-          <button
-            type="button"
-            (click)="sendEmail()"
-            [disabled]="emailUsGroup.invalid"
-            class="it-contact__submit"
-          >
-            Submit
-          </button>
-        </form>
-      </div>
-    </section>
-
-    <footer class="it-section it-footer" #footerSection>
-      <div
-        class="it-section__panel it-footer__panel"
-        (wheel)="onPanelWheel($event)"
-        (touchstart)="onPanelTouchStart($event)"
-        (touchmove)="onPanelTouchMove($event)"
-      >
-        <span class="it-section__eyebrow">IONITA TECH</span>
-
-        <h2>Let’s build something amazing.</h2>
-
-        <p>
-          © 2025 IonitaTech S.R.L. All rights reserved. Developed by IonitaTech.
-        </p>
-
-        <button class="it-button it-button--primary" (click)="scrollToSection(contactSection)">
-          Start Project
-        </button>
-      </div>
-    </footer>
-  </main>
-</div>
+      <p class="it-footer__legal">
+        © {{ currentYear }} {{ company.legalName }}. All rights reserved.
+      </p>
+      <a class="it-footer__link" routerLink="/privacy">Privacy Policy &amp; Terms</a>
+    </div>
+  </footer>
+</main>

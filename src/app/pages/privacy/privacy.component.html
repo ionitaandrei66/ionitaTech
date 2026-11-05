@@ -1,0 +1,22 @@
+<main class="it-legal">
+  <a class="it-legal__back" routerLink="/">← Back to Ionita<span>Tech.</span></a>
+
+  <article class="it-legal__card">
+    <span class="it-legal__eyebrow">LEGAL</span>
+    <h1>Privacy Policy &amp; Terms</h1>
+    <p class="it-legal__updated">Last updated: {{ lastUpdated }}</p>
+
+    @for (section of sections; track section.heading) {
+      <section class="it-legal__section">
+        <h2>{{ section.heading }}</h2>
+        @for (paragraph of section.paragraphs; track $index) {
+          <p>{{ paragraph }}</p>
+        }
+      </section>
+    }
+
+    <p class="it-legal__contact">
+      Questions? Use the <a routerLink="/" fragment="contact">contact form</a> on our homepage.
+    </p>
+  </article>
+</main>

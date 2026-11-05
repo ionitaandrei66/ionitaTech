@@ -1,0 +1,83 @@
+@import '../shared/style/spacing';
+@import '../shared/style/breakpoints';
+
+:host {
+  display: block;
+  min-height: 100vh;
+  color: #fff;
+  background:
+    radial-gradient(circle at 15% 0%, rgba(61, 165, 255, 0.16), transparent 40%),
+    #02040a;
+}
+
+.it-legal {
+  width: min(820px, 100%);
+  margin: 0 auto;
+  padding: $spacing-l $spacing-m $spacing-4xl;
+
+  @include respond(mld) {
+    padding: $spacing-m $spacing-s $spacing-2xl;
+  }
+}
+
+.it-legal__back {
+  display: inline-block;
+  margin-bottom: $spacing-m;
+  color: #fff;
+  font-weight: 800;
+  text-decoration: none;
+
+  span {
+    color: #3da5ff;
+  }
+}
+
+.it-legal__card {
+  padding: clamp(#{$spacing-m}, 4vw, #{$spacing-2xl});
+  border-radius: 28px;
+  background: rgba(5, 9, 22, 0.82);
+  border: 1px solid rgba(104, 167, 255, 0.22);
+}
+
+.it-legal__eyebrow {
+  color: #3da5ff;
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.26em;
+}
+
+h1 {
+  margin: $spacing-xs 0;
+  font-size: clamp(1.9rem, 2vw + 1rem, 3rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.it-legal__updated {
+  color: rgba(232, 238, 255, 0.55);
+  font-size: 0.85rem;
+}
+
+.it-legal__section {
+  margin-top: $spacing-l;
+
+  h2 {
+    margin: 0 0 $spacing-xs;
+    font-size: 1.15rem;
+  }
+
+  p {
+    margin: 0 0 $spacing-s;
+    color: rgba(232, 238, 255, 0.75);
+    line-height: 1.7;
+  }
+}
+
+.it-legal__contact {
+  margin-top: $spacing-l;
+  color: rgba(232, 238, 255, 0.75);
+
+  a {
+    color: #6cbaff;
+  }
+}

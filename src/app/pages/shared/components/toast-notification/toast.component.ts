@@ -1,19 +1,18 @@
-import { Component, inject } from '@angular/core';
-import { NgFor, NgIf } from '@angular/common';
-import {ToastService} from "../../services/toast.service";
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-toast-container',
   standalone: true,
-  imports: [NgFor, NgIf],
   templateUrl: './toast.component.html',
   styleUrl: './toast.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ToastContainerComponent {
-  readonly toast = inject(ToastService);
+  protected readonly toastService = inject(ToastService);
 
-  trackById = (_: number, t: { id: string }) => t.id;
-  close(id: string) {
-    this.toast.remove(id);
+  protected close(id: string): void {
+    this.toastService.remove(id);
   }
 }

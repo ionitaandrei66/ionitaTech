@@ -1,0 +1,33 @@
+@if (isVisible()) {
+  <div class="it-gate" role="dialog" aria-modal="true" aria-labelledby="it-gate-title">
+    <div class="it-gate__card">
+      <span class="it-gate__eyebrow">BEFORE YOU CONTINUE</span>
+      <h2 id="it-gate-title" class="it-gate__title">How this website uses your data</h2>
+
+      <ul class="it-gate__points">
+        @for (point of points; track $index) {
+          <li>{{ point }}</li>
+        }
+      </ul>
+
+      <p class="it-gate__more">
+        Read the full <a routerLink="/privacy">Privacy Policy &amp; Terms</a>.
+      </p>
+
+      @if (hasDeclined()) {
+        <p class="it-gate__declined" role="alert">
+          You need to accept these conditions to use this website. You can close this tab if you do not agree.
+        </p>
+      }
+
+      <div class="it-gate__actions">
+        <button class="it-gate__button it-gate__button--primary" type="button" (click)="accept()">
+          I accept
+        </button>
+        <button class="it-gate__button it-gate__button--ghost" type="button" (click)="decline()">
+          I do not accept
+        </button>
+      </div>
+    </div>
+  </div>
+}
