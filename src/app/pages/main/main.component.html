@@ -1,18 +1,8 @@
-<app-planet-scene />
+@defer (on idle) {
+  <app-planet-scene />
+}
 
-<header class="it-header" [class.it-header--scrolled]="isScrolled()">
-  <button class="it-header__logo" type="button" (click)="scrollTo('home')">
-    Ionita<span>Tech.</span>
-  </button>
-
-  <nav class="it-header__nav" aria-label="Main">
-    @for (item of navItems; track item.target) {
-      <button type="button" (click)="scrollTo(item.target)">{{ item.label }}</button>
-    }
-  </nav>
-
-  <button class="it-header__cta" type="button" (click)="scrollTo('contact')">Start Project</button>
-</header>
+<app-site-header [navItems]="navItems" (navigate)="navigateTo($event)" />
 
 <main class="it-content">
   <section id="home" class="it-section">
@@ -24,8 +14,8 @@
       </p>
 
       <div class="it-panel__actions">
-        <button class="it-button it-button--primary" type="button" (click)="scrollTo('contact')">Let’s talk</button>
-        <button class="it-button it-button--ghost" type="button" (click)="scrollTo('services')">View services</button>
+        <button class="it-button it-button--primary" type="button" (click)="navigateTo('contact')">Let’s talk</button>
+        <button class="it-button it-button--ghost" type="button" (click)="navigateTo('services')">View services</button>
       </div>
     </div>
   </section>
@@ -87,7 +77,7 @@
       <span class="it-panel__eyebrow">IONITA TECH</span>
       <h2>Let’s build something amazing.</h2>
 
-      <button class="it-button it-button--primary" type="button" (click)="scrollTo('contact')">Start Project</button>
+      <button class="it-button it-button--primary" type="button" (click)="navigateTo('contact')">Start Project</button>
 
       <p class="it-footer__legal">
         © {{ currentYear }} {{ company.legalName }}. All rights reserved.

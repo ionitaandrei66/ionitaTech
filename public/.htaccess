@@ -1,5 +1,8 @@
 Options -Indexes
 
+AddType application/manifest+json .webmanifest
+AddType image/webp .webp
+
 RewriteEngine On
 
 RewriteCond %{HTTPS} !=on
@@ -21,7 +24,7 @@ RewriteRule ^ index.html [L]
   <FilesMatch "\.(js|css)$">
     Header set Cache-Control "public, max-age=31536000, immutable"
   </FilesMatch>
-  <FilesMatch "^index\.html$">
+  <FilesMatch "^(index\.html|ngsw\.json|ngsw-worker\.js|safety-worker\.js|worker-basic\.min\.js|manifest\.webmanifest)$">
     Header set Cache-Control "no-cache"
   </FilesMatch>
 </IfModule>

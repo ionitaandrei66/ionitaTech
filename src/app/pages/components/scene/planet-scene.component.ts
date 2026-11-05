@@ -9,7 +9,6 @@ import {
   inject,
 } from '@angular/core';
 import * as THREE from 'three';
-import { GLTF, GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 interface PlanetLayout {
   readonly x: number;
@@ -23,7 +22,7 @@ const SCENE_CONFIG = Object.freeze({
   cameraDistance: 7.2,
   planetRadius: 2.15,
   planetSegments: 128,
-  planetModelUrl: '/Untitled.glb',
+  planetTextureUrl: '/moon-texture.webp',
   starCount: 3200,
   idleRotationSpeed: 0.0007,
   scrollRotationPerPixel: 0.0022,
@@ -82,7 +81,7 @@ export class PlanetSceneComponent implements AfterViewInit, OnDestroy {
 
     window.removeEventListener('scroll', this.onScroll);
     this.resizeObserver?.disconnect();
-    this.disposeObject(this.scene);
+    this.disposeScene();
     this.renderer?.dispose();
   }
 
@@ -142,40 +141,17 @@ export class PlanetSceneComponent implements AfterViewInit, OnDestroy {
   }
 
   private loadPlanet(): void {
-    new GLTFLoader().load(SCENE_CONFIG.planetModelUrl, (gltf: GLTF) => {
-      const texture = this.extractColorTexture(gltf);
+    new THREE.TextureLoader().load(SCENE_CONFIG.planetTextureUrl, (texture) => {
+      texture.colorSpace = THREE.SRGBColorSpace;
+      texture.anisotropy = this.renderer?.capabilities.getMaxAnisotropy() ?? 1;
 
-      const sphere = new THREE.Mesh(
+      this.planet = new THREE.Mesh(
         new THREE.SphereGeometry(SCENE_CONFIG.planetRadius, SCENE_CONFIG.planetSegments, SCENE_CONFIG.planetSegments),
-        new THREE.MeshStandardMaterial({ map: texture ?? undefined, roughness: 1, metalness: 0 }),
+        new THREE.MeshStandardMaterial({ map: texture, roughness: 1, metalness: 0 }),
       );
 
-      this.disposeObject(gltf.scene);
-      this.planetHolder.clear();
-      this.planetHolder.add(sphere);
-      this.planet = sphere;
+      this.planetHolder.add(this.planet);
     });
-  }
-
-  private extractColorTexture(gltf: GLTF): THREE.Texture | null {
-    let texture: THREE.Texture | null = null;
-
-    gltf.scene.traverse((object) => {
-      if (texture || !(object instanceof THREE.Mesh)) {
-        return;
-      }
-
-      const material = Array.isArray(object.material) ? object.material[0] : object.material;
-      const map = (material as THREE.MeshStandardMaterial).map;
-
-      if (map) {
-        texture = map.clone();
-        texture.colorSpace = THREE.SRGBColorSpace;
-        texture.needsUpdate = true;
-      }
-    });
-
-    return texture;
   }
 
   private readonly onScroll = (): void => {
@@ -252,8 +228,8 @@ export class PlanetSceneComponent implements AfterViewInit, OnDestroy {
     scale.setScalar(scale.x + (this.targetLayout.scale - scale.x) * easing);
   }
 
-  private disposeObject(root: THREE.Object3D): void {
-    root.traverse((object) => {
+  private disposeScene(): void {
+    this.scene.traverse((object) => {
       if (!(object instanceof THREE.Mesh) && !(object instanceof THREE.Points)) {
         return;
       }
@@ -261,7 +237,13 @@ export class PlanetSceneComponent implements AfterViewInit, OnDestroy {
       object.geometry.dispose();
 
       const materials: THREE.Material[] = Array.isArray(object.material) ? object.material : [object.material];
-      materials.forEach((material) => material.dispose());
+      materials.forEach((material) => {
+        if (material instanceof THREE.MeshStandardMaterial) {
+          material.map?.dispose();
+        }
+
+        material.dispose();
+      });
     });
   }
 }

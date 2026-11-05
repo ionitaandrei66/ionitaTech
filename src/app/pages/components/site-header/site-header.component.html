@@ -1,0 +1,40 @@
+<header class="it-header" [class.it-header--scrolled]="isScrolled() || isMenuOpen()">
+  <button class="it-header__logo" type="button" (click)="navigateTo('home')">
+    Ionita<span>Tech.</span>
+  </button>
+
+  <nav class="it-header__nav" aria-label="Main">
+    @for (item of navItems(); track item.target) {
+      <button type="button" (click)="navigateTo(item.target)">{{ item.label }}</button>
+    }
+  </nav>
+
+  <div class="it-header__actions">
+    <button class="it-header__cta" type="button" (click)="navigateTo('contact')">Start Project</button>
+
+    <button
+      class="it-header__menu-toggle"
+      [class.it-header__menu-toggle--open]="isMenuOpen()"
+      type="button"
+      aria-controls="it-mobile-menu"
+      [attr.aria-expanded]="isMenuOpen()"
+      [attr.aria-label]="isMenuOpen() ? 'Close menu' : 'Open menu'"
+      (click)="toggleMenu()"
+    >
+      <span class="it-header__menu-icon" aria-hidden="true"></span>
+    </button>
+  </div>
+</header>
+
+@if (isMenuOpen()) {
+  <div class="it-mobile-menu__backdrop" (click)="closeMenu()"></div>
+
+  <nav id="it-mobile-menu" class="it-mobile-menu" aria-label="Mobile">
+    @for (item of navItems(); track item.target) {
+      <button class="it-mobile-menu__item" type="button" (click)="navigateTo(item.target)">{{ item.label }}</button>
+    }
+    <button class="it-mobile-menu__item" type="button" (click)="navigateTo('contact')">Contact</button>
+
+    <button class="it-mobile-menu__cta" type="button" (click)="navigateTo('contact')">Start Project</button>
+  </nav>
+}
