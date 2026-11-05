@@ -1,5 +1,5 @@
-import { DOCUMENT } from '@angular/common';
-import { ChangeDetectionStrategy, Component, DestroyRef, NgZone, inject, signal } from '@angular/core';
+
+import { ChangeDetectionStrategy, Component, DestroyRef, NgZone, inject, signal, DOCUMENT } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { ContactFormComponent } from '../components/contact-form/contact-form.component';
