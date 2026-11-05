@@ -9,12 +9,11 @@ import { ConsentService } from '../../services/consent.service';
 
 /** Full-screen notice that blocks the website until the visitor accepts the conditions. */
 @Component({
-  selector: 'app-consent-gate',
-  standalone: true,
-  imports: [RouterLink],
-  templateUrl: './consent-gate.component.html',
-  styleUrl: './consent-gate.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-consent-gate',
+    imports: [RouterLink],
+    templateUrl: './consent-gate.component.html',
+    styleUrl: './consent-gate.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ConsentGateComponent {
   private static readonly SCROLL_LOCK_CLASS = 'it-scroll-locked';

@@ -15,12 +15,11 @@ import { ContactService } from '../../shared/services/contact.service';
 import { ToastService } from '../../shared/services/toast.service';
 
 @Component({
-  selector: 'app-contact-form',
-  standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
-  templateUrl: './contact-form.component.html',
-  styleUrl: './contact-form.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-contact-form',
+    imports: [ReactiveFormsModule, RouterLink],
+    templateUrl: './contact-form.component.html',
+    styleUrl: './contact-form.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ContactFormComponent {
   private readonly formBuilder = inject(NonNullableFormBuilder);

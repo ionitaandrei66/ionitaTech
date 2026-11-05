@@ -10,12 +10,11 @@ import { RevealOnScrollDirective } from '../shared/directives/reveal-on-scroll.d
 import { SectionId } from '../shared/models/site-content.model';
 
 @Component({
-  selector: 'app-main',
-  standalone: true,
-  imports: [PlanetSceneComponent, ContactFormComponent, RevealOnScrollDirective, RouterLink],
-  templateUrl: './main.component.html',
-  styleUrl: './main.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-main',
+    imports: [PlanetSceneComponent, ContactFormComponent, RevealOnScrollDirective, RouterLink],
+    templateUrl: './main.component.html',
+    styleUrl: './main.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MainComponent {
   private static readonly HEADER_SCROLL_THRESHOLD = 10;

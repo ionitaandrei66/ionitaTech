@@ -11,12 +11,11 @@ const SITE_DESCRIPTION =
   'Ionita Tech delivers scalable, secure, and modern software solutions — from consulting and custom development to cloud and cybersecurity.';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet, ToastContainerComponent, ConsentGateComponent],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-root',
+    imports: [RouterOutlet, ToastContainerComponent, ConsentGateComponent],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
   private readonly meta = inject(Meta);
