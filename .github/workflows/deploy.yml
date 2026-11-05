@@ -9,6 +9,11 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    env:
+      SSH_HOST: 82.198.227.251
+      SSH_PORT: 65002
+      DEPLOY_PATH: domains/ionitatech.com/public_html
+
     steps:
       - uses: actions/checkout@v4
 
@@ -20,24 +25,24 @@ jobs:
       - run: npm run build
 
       - name: Check dist folder
+        run: ls -la dist/ionita-tech/browser
+
+      - name: Set up SSH key
         run: |
-          ls -la dist
-          ls -la dist/ionita-tech
-          ls -la dist/ionita-tech/browser
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          # Pinned host key, so the deploy cannot be redirected to another server
+          echo "[82.198.227.251]:65002 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIImZXnYQXE5OICrv/0XeU2t+PHOhXbLVtq+WTH+Lv/Hq" > ~/.ssh/known_hosts
 
-      - name: Install lftp
-        run: sudo apt-get update && sudo apt-get install -y lftp
-
-      - name: Deploy with FTP
+      - name: Deploy with rsync over SSH
         run: |
-          lftp -d -u "${{ secrets.FTP_USERNAME }}","${{ secrets.FTP_PASSWORD }}" "${{ secrets.FTP_HOST }}" <<EOF
-          set ftp:ssl-allow no
-          set ftp:passive-mode on
-          set net:timeout 60
-          set net:max-retries 3
-          set net:reconnect-interval-base 5
+          rsync -az --delete \
+            -e "ssh -i ~/.ssh/deploy_key -p $SSH_PORT -o StrictHostKeyChecking=yes" \
+            ./dist/ionita-tech/browser/ \
+            "${{ secrets.SSH_USER }}@$SSH_HOST:$DEPLOY_PATH/"
 
-          mirror -R --delete --verbose ./dist/ionita-tech/browser/ public_html/
-
-          bye
-          EOF
+      - name: Remove SSH key
+        if: always()
+        run: rm -f ~/.ssh/deploy_key
