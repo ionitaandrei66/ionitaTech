@@ -1,3 +1,5 @@
+@use 'sass:map';
+
 // --- Breakpoints ---
 $breakpoints: (
   min: 250px,
@@ -30,28 +32,28 @@ $breakpoints: (
 
 // --- Mixin pentru un singur breakpoint ---
 @mixin respond($breakpoint) {
-  @media (max-width: map-get($breakpoints, $breakpoint)) {
+  @media (max-width: map.get($breakpoints, $breakpoint)) {
     @content;
   }
 }
 
 // --- Mixin pentru între două breakpoints ---
 @mixin respond-between($breakpoint-min, $breakpoint-max) {
-  @media (min-width: calc(map-get($breakpoints, $breakpoint-min) + 1px)) and (max-width: map-get($breakpoints, $breakpoint-max)) {
+  @media (min-width: calc(map.get($breakpoints, $breakpoint-min) + 1px)) and (max-width: map.get($breakpoints, $breakpoint-max)) {
     @content;
   }
 }
 
 // --- Mixin pentru min-width (mobile first design) ---
 @mixin respond-min($breakpoint) {
-  @media (min-width: map-get($breakpoints, $breakpoint)) {
+  @media (min-width: map.get($breakpoints, $breakpoint)) {
     @content;
   }
 }
 
 // --- Mixin pentru ecrane mai mari decât 2100px (infinit) ---
 @mixin respond-infinite {
-  @media (min-width: calc(map-get($breakpoints, max) + 1px)) {
+  @media (min-width: calc(map.get($breakpoints, max) + 1px)) {
     @content;
   }
 }

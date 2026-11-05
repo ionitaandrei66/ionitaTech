@@ -1,5 +1,5 @@
-@import '../../shared/style/spacing';
-@import '../../shared/style/breakpoints';
+@use '../../shared/style/spacing' as *;
+@use '../../shared/style/breakpoints' as *;
 
 .it-contact-form {
   position: relative;

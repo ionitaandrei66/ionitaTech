@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 
 import { PlanetSceneComponent } from '../components/scene/planet-scene.component';
 import { MainComponent } from './main.component';
 
-// WebGL is not available in headless test browsers, so the 3D scene is replaced by an empty stub
-@Component({ selector: 'app-planet-scene', standalone: true, template: '' })
+@Component({ selector: 'app-planet-scene', standalone: true, changeDetection: ChangeDetectionStrategy.Eager,
+ template: '' })
 class PlanetSceneStubComponent {}
 
 describe('MainComponent', () => {

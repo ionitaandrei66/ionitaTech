@@ -4,7 +4,6 @@ export interface ContactMessage {
   readonly name: string;
   readonly email: string;
   readonly message: string;
-  /** Honeypot field: always empty for real visitors, filled in by bots. */
   readonly website: string;
 }
 

@@ -1,6 +1,6 @@
-@import '../../style/spacing';
-@import '../../style/font-size';
-@import '../../style/breakpoints';
+@use '../../style/spacing' as *;
+@use '../../style/font-size' as *;
+@use '../../style/breakpoints' as *;
 
 .it-toast-stack {
   position: fixed;

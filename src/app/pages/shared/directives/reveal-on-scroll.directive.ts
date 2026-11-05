@@ -1,9 +1,7 @@
 import { Directive, ElementRef, OnDestroy, OnInit, inject } from '@angular/core';
 
-/** Fades an element in the first time it scrolls into view (styles live in styles.scss). */
 @Directive({
   selector: '[appRevealOnScroll]',
-  standalone: true,
   host: { class: 'it-reveal' },
 })
 export class RevealOnScrollDirective implements OnInit, OnDestroy {

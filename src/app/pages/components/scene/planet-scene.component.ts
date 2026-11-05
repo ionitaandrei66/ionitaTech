@@ -26,9 +26,7 @@ const SCENE_CONFIG = Object.freeze({
   planetModelUrl: '/Untitled.glb',
   starCount: 3200,
   idleRotationSpeed: 0.0007,
-  /** Radians of planet rotation per scrolled pixel. */
   scrollRotationPerPixel: 0.0022,
-  /** 0..1, how fast the planet catches up with the scroll position; lower is smoother. */
   scrollEasing: 0.07,
   layoutEasing: 0.08,
   maxPixelRatio: 2,
@@ -38,7 +36,6 @@ const SCENE_CONFIG = Object.freeze({
 
 @Component({
   selector: 'app-planet-scene',
-  standalone: true,
   template: '<div #canvasHost class="canvas-host"></div>',
   styleUrl: './planet-scene.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -66,7 +63,6 @@ export class PlanetSceneComponent implements AfterViewInit, OnDestroy {
   private targetLayout: PlanetLayout = { x: 0, y: 0, scale: 1 };
 
   public ngAfterViewInit(): void {
-    // Everything here runs per frame or per scroll event; keep it out of Angular change detection.
     this.ngZone.runOutsideAngular(() => {
       this.initRenderer();
       this.addLights();
@@ -145,7 +141,6 @@ export class PlanetSceneComponent implements AfterViewInit, OnDestroy {
     this.scene.add(this.stars);
   }
 
-  /** The model is only used for its surface texture; a smooth sphere renders it more cleanly. */
   private loadPlanet(): void {
     new GLTFLoader().load(SCENE_CONFIG.planetModelUrl, (gltf: GLTF) => {
       const texture = this.extractColorTexture(gltf);
@@ -234,7 +229,6 @@ export class PlanetSceneComponent implements AfterViewInit, OnDestroy {
     this.targetLayout = this.computeLayout(this.camera.aspect);
   }
 
-  /** Wide screens: planet on the left, content on the right. Narrow screens: smaller planet centred behind the content. */
   private computeLayout(aspect: number): PlanetLayout {
     const halfHeight = SCENE_CONFIG.cameraDistance * Math.tan(THREE.MathUtils.degToRad(SCENE_CONFIG.cameraFov / 2));
     const halfWidth = halfHeight * aspect;

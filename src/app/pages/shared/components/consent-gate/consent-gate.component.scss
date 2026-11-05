@@ -1,5 +1,5 @@
-@import '../../style/spacing';
-@import '../../style/breakpoints';
+@use '../../style/spacing' as *;
+@use '../../style/breakpoints' as *;
 
 .it-gate {
   position: fixed;

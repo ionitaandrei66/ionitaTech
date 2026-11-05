@@ -5,7 +5,6 @@
 }
 
 html {
-  // Fixed base size so text never outgrows its panel on large monitors; headings scale with clamp() instead.
   font-size: 16px;
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
@@ -40,13 +39,11 @@ textarea:focus-visible {
   border: 0;
 }
 
-// Set by ConsentGateComponent while the notice is open
 .it-scroll-locked,
 .it-scroll-locked body {
   overflow: hidden;
 }
 
-// Used by RevealOnScrollDirective
 .it-reveal {
   opacity: 0;
   transform: translateY(48px) scale(0.98);

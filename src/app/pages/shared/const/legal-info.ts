@@ -8,10 +8,8 @@ export const COMPANY_INFO: CompanyInfo = Object.freeze({
 
 export const POLICY_LAST_UPDATED = '5 November 2026';
 
-/** Bump when the notice text changes, so every visitor has to accept the new version. */
 export const NOTICE_VERSION = '2026-11-05-emailjs';
 
-/** Short points shown in the full-screen notice every visitor must accept. */
 export const NOTICE_POINTS: readonly string[] = [
   'We do not use cookies, analytics, advertising or tracking.',
   'The contact form is delivered by EmailJS, an external (third-party) service. When you send a message, your name, email address and message are transmitted to EmailJS, which emails them to us.',
@@ -32,7 +30,7 @@ export const PRIVACY_SECTIONS: readonly PolicySection[] = [
     paragraphs: [
       'Contact form: your name, email address and the message you write. This data is only sent when you press "Send message".',
       'Technical data: our hosting provider keeps standard server logs (IP address, browser type, date and time of the request) to keep the website secure and working.',
-      'Local storage: your browser remembers that you accepted our conditions, so we do not ask again. This value never leaves your device.',
+      'Local storage: your browser remembers that you accepted our conditions and the times you sent messages from the contact form (no content, used only to limit spam). These values never leave your device.',
       'We do not use cookies, analytics, advertising, tracking pixels or social media plugins.',
     ],
   },

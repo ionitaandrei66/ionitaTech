@@ -1,4 +1,3 @@
-
 import { ChangeDetectionStrategy, Component, computed, effect, inject, signal, DOCUMENT } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
@@ -7,17 +6,15 @@ import { filter, map } from 'rxjs';
 import { NOTICE_POINTS } from '../../const/legal-info';
 import { ConsentService } from '../../services/consent.service';
 
-/** Full-screen notice that blocks the website until the visitor accepts the conditions. */
 @Component({
-    selector: 'app-consent-gate',
-    imports: [RouterLink],
-    templateUrl: './consent-gate.component.html',
-    styleUrl: './consent-gate.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'app-consent-gate',
+  imports: [RouterLink],
+  templateUrl: './consent-gate.component.html',
+  styleUrl: './consent-gate.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConsentGateComponent {
   private static readonly SCROLL_LOCK_CLASS = 'it-scroll-locked';
-  /** The policy must stay readable before accepting, otherwise visitors would accept blindly. */
   private static readonly UNGATED_PATHS: readonly string[] = ['/privacy'];
 
   private readonly consentService = inject(ConsentService);

@@ -15,19 +15,21 @@ import { ContactService } from '../../shared/services/contact.service';
 import { ToastService } from '../../shared/services/toast.service';
 
 @Component({
-    selector: 'app-contact-form',
-    imports: [ReactiveFormsModule, RouterLink],
-    templateUrl: './contact-form.component.html',
-    styleUrl: './contact-form.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'app-contact-form',
+  imports: [ReactiveFormsModule, RouterLink],
+  templateUrl: './contact-form.component.html',
+  styleUrl: './contact-form.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactFormComponent {
+  private static readonly TOO_MANY_REQUESTS = 429;
+
   private readonly formBuilder = inject(NonNullableFormBuilder);
   private readonly contactService = inject(ContactService);
   private readonly toastService = inject(ToastService);
   private readonly destroyRef = inject(DestroyRef);
 
-  private static readonly TOO_MANY_REQUESTS = 429;
+  private readonly renderedAt = Date.now();
 
   protected readonly limits = CONTACT_LIMITS;
   protected readonly emailJsPrivacyUrl = EMAILJS_PRIVACY_URL;
@@ -55,7 +57,7 @@ export class ContactFormComponent {
     this.isSending.set(true);
 
     this.contactService
-      .send(this.buildMessage())
+      .send(this.buildMessage(), Date.now() - this.renderedAt)
       .pipe(
         finalize(() => this.isSending.set(false)),
         takeUntilDestroyed(this.destroyRef),

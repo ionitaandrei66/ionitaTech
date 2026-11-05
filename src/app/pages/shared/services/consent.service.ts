@@ -14,7 +14,6 @@ export class ConsentService {
     this._accepted.set(true);
   }
 
-  // Storage can be blocked (private mode, strict settings); the banner then simply shows again next visit.
   private readAcceptedVersion(): string | null {
     try {
       return localStorage.getItem(ConsentService.STORAGE_KEY);
@@ -27,7 +26,6 @@ export class ConsentService {
     try {
       localStorage.setItem(ConsentService.STORAGE_KEY, version);
     } catch {
-      // Ignored on purpose, see readAcceptedVersion.
     }
   }
 }

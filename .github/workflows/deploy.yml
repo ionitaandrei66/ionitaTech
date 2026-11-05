@@ -19,7 +19,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version-file: .nvmrc
 
       - run: npm ci
       - run: npm run build
@@ -33,7 +33,6 @@ jobs:
           chmod 700 ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          # Pinned host key, so the deploy cannot be redirected to another server
           echo "[82.198.227.251]:65002 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIImZXnYQXE5OICrv/0XeU2t+PHOhXbLVtq+WTH+Lv/Hq" > ~/.ssh/known_hosts
 
       - name: Deploy with rsync over SSH

@@ -1,4 +1,3 @@
-
 import { ChangeDetectionStrategy, Component, DestroyRef, NgZone, inject, signal, DOCUMENT } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
@@ -10,11 +9,11 @@ import { RevealOnScrollDirective } from '../shared/directives/reveal-on-scroll.d
 import { SectionId } from '../shared/models/site-content.model';
 
 @Component({
-    selector: 'app-main',
-    imports: [PlanetSceneComponent, ContactFormComponent, RevealOnScrollDirective, RouterLink],
-    templateUrl: './main.component.html',
-    styleUrl: './main.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'app-main',
+  imports: [PlanetSceneComponent, ContactFormComponent, RevealOnScrollDirective, RouterLink],
+  templateUrl: './main.component.html',
+  styleUrl: './main.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainComponent {
   private static readonly HEADER_SCROLL_THRESHOLD = 10;
@@ -35,11 +34,9 @@ export class MainComponent {
   }
 
   protected scrollTo(sectionId: SectionId): void {
-    // Smoothness comes from `scroll-behavior` in styles.scss, which also respects reduced-motion settings.
     this.document.getElementById(sectionId)?.scrollIntoView({ block: 'start' });
   }
 
-  /** Listens outside Angular and only re-enters it when the header state actually flips. */
   private trackHeaderState(): void {
     const view = this.document.defaultView;
 
